@@ -1,4 +1,82 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "index.scss";
+html,
+body {
+    height: 100%;
+    background: #000330;
+    color: white;
+    font-size: 20px;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.p-overlaypanel {
+    background: #1c2546;
+    color: white;
+    border: none;
+    box-shadow: 0 0 10px #0f1633;
+
+    &::before,
+    &::after {
+        display: none;
+    }
+
+    .p-overlaypanel-content {
+        padding: 0.75em 1em;
+    }
+}
+@keyframes animate {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 400%;
+    }
+}
+.resetBtn {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+}
+.btnPrimary {
+    border: none;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    outline: none;
+    background: linear-gradient(90deg, #ffaa0d, #d92b2b, #ec37d0, #ffaa0d);
+    background-size: 400%;
+    color: #fff;
+    display: block;
+    padding: 0.5em 1.5em;
+    transition: all 0.3s ease;
+    font-size: 1em;
+
+    &:hover {
+        animation: animate 7s linear infinite;
+        box-shadow: 0 0 10px #ffaa0d;
+    }
+}
+.btnSecondary {
+    @extend .btnPrimary;
+    background: linear-gradient(90deg, #ffaa0d, #d92b2b, #1c07d4, #ffaa0d);
+    background-size: 400%;
+}
+.btnThird {
+    @extend .btnPrimary;
+    background: linear-gradient(90deg, #3b82f6, #d92b2b, #ec37d0, #3b82f6);
+    background-size: 400%;
+    &:hover {
+        box-shadow: 0 0 10px #3b82f6;
+    }
+}

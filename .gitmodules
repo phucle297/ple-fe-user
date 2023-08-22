@@ -1,0 +1,4 @@
+[submodule "src/contracts"]
+	path = src/contracts
+	url = https://github.com/phucle297/ple-contracts
+	branch = master
