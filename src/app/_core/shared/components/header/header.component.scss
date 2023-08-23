@@ -5,12 +5,12 @@
     color: white;
     display: block;
     position: fixed;
-    width: calc(100% - 300px);
+    width: 100%;
     height: 80px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    z-index: 1000;
+    z-index: 1;
     right: 0;
 }
 
@@ -26,7 +26,6 @@
     }
 }
 
-
-.panel{
+.panel {
     background: red;
 }

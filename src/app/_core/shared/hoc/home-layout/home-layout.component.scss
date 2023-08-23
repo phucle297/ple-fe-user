@@ -8,18 +8,13 @@
     position: relative;
     color: $white;
     display: flex;
-    .sidebar {
-        height: 100vh;
-        background: $primary;
-        color: $white;
-        padding: 0 20px;
-        width: 300px;
-    }
 
     .main {
+        width: calc(100% - 300px);
         background: $background;
         padding: 10px;
         color: $white;
         margin-top: 80px;
+        margin-left: auto;
     }
 }
