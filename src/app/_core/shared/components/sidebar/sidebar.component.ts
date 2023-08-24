@@ -18,6 +18,11 @@ export class SidebarComponent {
       routerLink: ['/marketplace'],
     },
     {
+      label: 'Pool',
+      icon: 'pi pi-fw pi-chart-bar',
+      routerLink: ['/pool'],
+    },
+    {
       label: 'Events',
       icon: 'pi pi-fw pi-calendar',
       routerLink: ['/events'],
