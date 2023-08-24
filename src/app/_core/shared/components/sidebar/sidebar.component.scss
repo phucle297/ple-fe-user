@@ -10,12 +10,16 @@
 
     .logo {
         margin: 2rem auto;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
         width: 85%;
         display: block;
     }
+    .main-menu {
+        display: flex;
+        justify-content: center;
+    }
 
-    .footerMenu {
+    .footer-menu {
         margin-bottom: 0.5rem;
         text-align: center;
     }

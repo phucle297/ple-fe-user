@@ -1,17 +1,19 @@
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import {
   Component,
   ElementRef,
-  OnDestroy,
   OnInit,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
-// import { INode } from '@app/_core/interfaces/nodes.interface';
+import { Router } from '@angular/router';
 import * as d3 from 'd3';
-import { Observable, Subscription, fromEvent } from 'rxjs';
 
 interface INode extends d3.SimulationNodeDatum {
   r?: number;
-  group?: string;
+  originalColor?: string;
+  group?: number;
+  color?: string;
 }
 declare const window: any;
 @Component({
@@ -21,98 +23,169 @@ declare const window: any;
 })
 export class WelcomePageComponent implements OnInit, OnDestroy {
   @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
+  @ViewChild('exploreBtn', { static: true }) exploreBtn!: ElementRef;
   resizeObservable$!: Observable<Event>;
   resizeSubscription$!: Subscription;
-  width: number = window.innerWidth;
+  height = window.innerHeight;
+  width = window.innerWidth;
 
-  data: any[] = [];
-  constructor() {
+  simulation: any;
+  nodes!: INode[];
+  constructor(private router: Router) {
     this.generateBallsData();
   }
   private generateBallsData() {
-    const k = this.width / 200;
-    const r = d3.randomUniform(k, k * 4);
+    const width = window.innerWidth;
+    const k = width / 200;
+    const r = d3.randomUniform(k, k * 4); // Random angle
     const n = 4;
     const dataBalls = Array.from({ length: 200 }, (_, i) => ({
       r: r(),
       group: i && (i % n) + 1,
+      x: Math.cos((i / 200) * Math.PI * 2) * width * 0.4 + width / 2, // Distribute nodes in a circle
+      y: Math.sin((i / 200) * Math.PI * 2) * width * 0.4 + width / 2, // Distribute nodes in a circle
     }));
-    this.data = dataBalls;
+    this.nodes = dataBalls;
   }
-
   ngOnInit(): void {
     this.resizeObservable$ = fromEvent(window, 'resize');
     this.resizeSubscription$ = this.resizeObservable$.subscribe(() => {
       this.width = window.innerWidth;
+      this.height = window.innerHeight;
     });
-    const width = window.innerHeight;
+    const width = window.innerWidth;
     const height = window.innerHeight;
-    const canvas = d3
-      .select(this.chartContainer.nativeElement)
-      .append('canvas');
-    canvas.attr('width', width).attr('height', height);
-    const context = canvas.node()?.getContext('2d') as CanvasRenderingContext2D;
 
-    const nodes: INode[] = this.data.map((d) => ({
+    const svg = d3
+      .select(this.chartContainer.nativeElement)
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
+
+    this.nodes = this.nodes.map((d, i) => ({
+      color: i === 0 ? 'transparent' : '#fff',
       r: d.r,
-      group: d.group,
+      x: width / 2, // Initialize x position to the center
+      y: height / 2, // Initialize y position to the center
     })) as INode[];
 
+    const nodeElements = svg
+      .selectAll('.node')
+      .data(this.nodes)
+      .enter()
+      .append('circle')
+      .attr('class', 'node')
+      .attr('r', (d) => d.r!)
+      .style('fill', (d: INode) => d.color!);
+
     const ticked = () => {
-      context.clearRect(0, 0, width, height);
-      context.save();
-      context.translate(width / 2, height / 2);
-      for (let i = 1; i < nodes.length; ++i) {
-        const d = nodes[i];
-        context.beginPath();
-        context.moveTo((d.x as number) + (d.r as number), d.y as number);
-        context.arc(
-          d.x as number,
-          d.y as number,
-          d.r as number,
-          0,
-          2 * Math.PI
-        );
-        context.fillStyle = '#fff';
-        context.fill();
-      }
-      context.restore();
+      nodeElements
+        .attr('cx', (d: INode) => d.x!)
+        .attr('cy', (d: INode) => d.y!);
     };
     const pointermoved = (event: any) => {
-      console.log(event);
       const [mx, my] = d3.pointer(event);
-      nodes[0].fx = mx - width / 2;
-      nodes[0].fy = my - height / 2;
-      simulation.alpha(1).restart();
+      this.nodes[0].fx = mx;
+      this.nodes[0].fy = my;
+      this.simulation.alpha(1).restart();
     };
-    const simulation = d3
-      .forceSimulation(nodes)
+
+    this.simulation = d3
+      .forceSimulation(this.nodes)
       .alphaTarget(0.3)
       .velocityDecay(0.1)
-      .force('x', d3.forceX().strength(0.01))
-      .force('y', d3.forceX().strength(0.01))
-      .force('radial', d3.forceRadial(200))
+      .force('x', d3.forceX((d) => d.x!).strength(0.01))
+      .force('y', d3.forceY((d) => d.y!).strength(0.01))
       .force(
         'collide',
         d3
           .forceCollide()
-          .radius((d: INode) => d.r! + 0.5)
+          .radius((d: INode) => d.r! + 2)
           .iterations(3)
       )
       .force(
         'charge',
-        d3.forceManyBody().strength((_, i) => (i ? 0 : (-width * 2) / 3))
+        d3.forceManyBody().strength((d, i) => (i ? 0 : (-width * 2) / 3))
       )
       .on('tick', ticked);
 
-    d3.select(canvas.node())
-      .on('pointermoved', pointermoved)
-      .on('touchmove', (event) => event.preventDefault());
-    simulation.on('end', () => {
-      simulation.stop();
-    });
+    svg.on('mousemove', pointermoved);
   }
+
+  handleExploreBtnClick() {
+    this.exploreBtn.nativeElement.style.opacity = '0';
+    this.exploreBtn.nativeElement.style.visibility = 'hidden';
+
+    this.modifyNodesAndAnimate();
+    setTimeout(() => {
+      this.router.navigate(['/home']);
+    }, 2500);
+  }
+  generateColor(d: INode, i: number) {
+    switch (i) {
+      case 1:
+        return 'red';
+      case 2:
+        return 'green';
+      case 3:
+        return 'blue';
+      default:
+        return 'transparent';
+    }
+  }
+  modifyNodesAndAnimate() {
+    const svg = d3.select(this.chartContainer.nativeElement).select('svg');
+
+    svg
+      .selectAll('.node')
+      .filter((d, i) => i >= 4)
+      .remove();
+    const nodesSelected = svg.selectAll('.node').filter((d, i) => i < 4);
+
+    // Change the color of the nodes, change position and radius. After that, hide the nodes
+    nodesSelected
+      .transition()
+      .duration(2000)
+      .attr('r', (d: any) => d.r! * 100)
+      .attr('cx', (_, i) => {
+        switch (i) {
+          case 0:
+            return 0;
+          case 1:
+            return 300;
+          case 2:
+            return this.width - 100;
+          case 3:
+            return this.width / 2;
+          default:
+            return 0;
+        }
+      })
+      .attr('cy', (_, i) => {
+        switch (i) {
+          case 0:
+            return 0;
+          case 1:
+            return 300;
+          case 2:
+            return 200;
+          case 3:
+            return window.innerHeight - 100;
+          default:
+            return 0;
+        }
+      })
+      .style('fill', (d, i) => this.generateColor(d as INode, i))
+      .style('opacity', 0)
+      .on('end', () => {
+        this.simulation.stop();
+        svg.selectAll('.node').remove();
+      });
+  }
+
   ngOnDestroy(): void {
     this.resizeSubscription$.unsubscribe();
+    this.simulation.stop();
+    d3.select(this.chartContainer.nativeElement).selectAll('svg').remove();
   }
 }
