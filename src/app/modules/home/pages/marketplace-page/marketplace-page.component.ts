@@ -1,148 +1,36 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import {
-  DEFAULT_MAX_PRICE_RANGE,
-  MAX_PRICE_RANGE,
-} from '@app/_core/constants/price-range';
-
+import { Component, ViewChild } from '@angular/core';
+import { debounceTime } from 'rxjs/operators';
+import { SearchAndFilterComponent } from './components/search-and-filter/search-and-filter.component';
 @Component({
   selector: 'app-marketplace-page',
   templateUrl: './marketplace-page.component.html',
   styleUrls: ['./marketplace-page.component.scss'],
 })
 export class MarketplacePageComponent {
-  minValue: number = 0;
-  maxValue: number = MAX_PRICE_RANGE;
+  @ViewChild('searchAndFilter', { static: true })
+  searchAndFilterComponent!: SearchAndFilterComponent;
 
-  priceRange: number[] = [0, DEFAULT_MAX_PRICE_RANGE];
-  searchAndFilterForm = new FormGroup({
-    search: new FormControl(''),
-    category: new FormControl(['']),
-    status: new FormControl(['']),
-    priceMin: new FormControl(''),
-    priceMax: new FormControl(''),
-  });
+  constructor() {}
 
-  private modifyCheckBox(
-    typeOfCheckbox: keyof { status: string[]; category: string[] },
-    bool: boolean,
-    nameField: string
-  ) {
-    if (bool) {
-      const fields: string[] = this.searchAndFilterForm.controls[typeOfCheckbox]
-        .value as string[];
-      this.searchAndFilterForm.controls[typeOfCheckbox].patchValue([
-        ...fields,
-        nameField,
-      ]);
-    } else {
-      const fields: string[] = this.searchAndFilterForm.controls[typeOfCheckbox]
-        .value as string[];
-      this.searchAndFilterForm.controls[typeOfCheckbox].patchValue([
-        ...fields.filter((item) => item !== nameField),
-      ]);
-    }
-
-    this.searchAndFilterForm.controls[typeOfCheckbox].patchValue(
-      this.searchAndFilterForm.controls[typeOfCheckbox].value!.filter(
-        (item) => item !== ''
-      )
-    );
+  ngOnInit() {
+    this.setupFormChangeListeners();
   }
 
-  private modifyValueFormControl(
-    typeOfFormControl: keyof {
-      search: string;
-      priceMin: number;
-      priceMax: number;
-    },
-    value: string
-  ) {
-    this.searchAndFilterForm.controls[typeOfFormControl].patchValue(value);
-  }
-  handleEventChecked(bool: boolean, nameField: string) {
-    switch (nameField) {
-      case 'trading':
-      case 'auction':
-      case 'expired':
-      case 'static':
-        this.modifyCheckBox('status', bool, nameField);
-        break;
-      case 'nfn':
-      case 'nnm':
-      case 'gfn':
-      case 'kfm':
-        this.modifyCheckBox('category', bool, nameField);
-        break;
-      default:
-        break;
-    }
+  private setupFormChangeListeners() {
+    this.searchAndFilterComponent.searchAndFilterForm.valueChanges
+      .pipe(debounceTime(300)) // Add debounceTime to avoid rapid API calls
+      .subscribe((formValue) => {
+        // Call your API service with the form values
+        if (formValue) this.callApiWithFormValues(formValue);
+      });
   }
 
-  onSubmit() {
-    console.log(this.searchAndFilterForm.value);
-  }
-
-  handlePriceChange(e: any, type: 'min' | 'max' | 'range') {
-    switch (type) {
-      case 'min':
-        if (this.minValue < 0) this.minValue = 0;
-        if (e.value > this.maxValue) {
-          this.minValue = this.maxValue;
-          this.maxValue = e.value;
-          this.priceRange = [
-            ...[
-              (this.minValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
-              (this.maxValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
-            ],
-          ];
-        } else {
-          this.priceRange = [
-            ...[
-              (e.value / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
-              (this.maxValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
-            ],
-          ];
-        }
-        break;
-      case 'max':
-        if (this.maxValue > MAX_PRICE_RANGE) this.maxValue = MAX_PRICE_RANGE;
-        if (e.value < this.minValue) {
-          this.maxValue = this.minValue;
-          this.minValue = e.value;
-          this.priceRange = [
-            ...[
-              (this.minValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
-              (this.maxValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
-            ],
-          ];
-        } else {
-          this.priceRange = [
-            ...[
-              (this.minValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
-              (e.value / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
-            ],
-          ];
-        }
-        break;
-      case 'range':
-        this.minValue = Math.round(
-          (e.values[0] / DEFAULT_MAX_PRICE_RANGE) * MAX_PRICE_RANGE
-        );
-        this.maxValue = Math.round(
-          (e.values[1] / DEFAULT_MAX_PRICE_RANGE) * MAX_PRICE_RANGE
-        );
-        if (this.minValue > this.maxValue) {
-          let temp = this.minValue;
-          this.minValue = this.maxValue;
-          this.maxValue = temp;
-        }
-        break;
-      default:
-        break;
-    }
-
-    this.modifyValueFormControl('priceMin', this.minValue.toString());
-    this.modifyValueFormControl('priceMax', this.maxValue.toString());
+  private callApiWithFormValues(formValue: any) {
+    console.log(formValue);
+    // Here, you can call your API service with the form values
+    // and implement pagination logic based on the received data
+    // this.apiService.getProducts(formValue).subscribe((data) => {
+    // Handle API response and update your component's data
+    // });
   }
 }

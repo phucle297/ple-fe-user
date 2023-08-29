@@ -1,0 +1,115 @@
+<div class="search-bar">
+  <form class="form" [formGroup]="searchAndFilterForm" (ngSubmit)="onSubmit()">
+    <div class="search">
+      <input
+        class="resetInput searchInput"
+        type="text"
+        formControlName="search"
+        placeholder="Search"
+      />
+      <button type="submit" class="resetBtn searchBtn">
+        <i class="pi pi-search"></i>
+      </button>
+    </div>
+  </form>
+  <p-overlayPanel #op>
+    <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
+      <p-accordionTab header="Status">
+        <div class="status">
+          <div class="groupItem">
+            <div class="item">
+              <app-checkbox-custom
+                (handleEventChecked)="handleEventChecked($event, 'trading')"
+              >
+                <span>Trading</span>
+              </app-checkbox-custom>
+              <app-checkbox-custom
+                (handleEventChecked)="handleEventChecked($event, 'auction')"
+              >
+                <span>Auction</span>
+              </app-checkbox-custom>
+            </div>
+            <div class="item">
+              <app-checkbox-custom
+                (handleEventChecked)="handleEventChecked($event, 'expired')"
+              >
+                <span>Expired</span>
+              </app-checkbox-custom>
+              <app-checkbox-custom
+                (handleEventChecked)="handleEventChecked($event, 'static')"
+              >
+                <span>Static</span>
+              </app-checkbox-custom>
+            </div>
+          </div>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="Category">
+        <div class="category">
+          <div class="groupItem">
+            <div class="item">
+              <app-checkbox-custom
+                (handleEventChecked)="handleEventChecked($event, 'nfn')"
+              >
+                <span>NFN</span>
+              </app-checkbox-custom>
+              <app-checkbox-custom
+                (handleEventChecked)="handleEventChecked($event, 'nnm')"
+              >
+                <span>NNM</span>
+              </app-checkbox-custom>
+            </div>
+            <div class="item">
+              <app-checkbox-custom
+                (handleEventChecked)="handleEventChecked($event, 'gfn')"
+              >
+                <span>GFN</span>
+              </app-checkbox-custom>
+              <app-checkbox-custom
+                (handleEventChecked)="handleEventChecked($event, 'kfm')"
+              >
+                <span>KFM</span>
+              </app-checkbox-custom>
+            </div>
+          </div>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="Price">
+        <div class="price-range-wrapper">
+          <div class="price-range">
+            <input
+              type="number"
+              class="resetInput"
+              [(ngModel)]="minValue"
+              #min
+              (change)="handlePriceChange(min, 'min')"
+            />
+            -
+            <input
+              type="number"
+              class="resetInput"
+              [(ngModel)]="maxValue"
+              #max
+              (change)="handlePriceChange(max, 'max')"
+            />
+          </div>
+          <div class="price-slider-wrapper">
+            <p-slider
+              [(ngModel)]="priceRange"
+              [range]="true"
+              #slider
+              (onSlideEnd)="handlePriceChange(slider, 'range')"
+              class="price-slider"
+            ></p-slider>
+          </div>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </p-overlayPanel>
+  <button
+    pButton
+    class="filterBtn"
+    (click)="op.toggle($event)"
+    icon="pi pi-filter"
+  ></button>
+</div>
