@@ -1,0 +1,87 @@
+.wrapper {
+    padding: 20px 40px;
+
+    .search-bar {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        column-gap: 1rem;
+    }
+    .form {
+        width: 100%;
+    }
+    .search {
+        position: relative;
+        width: 100%;
+        .searchInput {
+            width: 100%;
+        }
+        .searchBtn {
+            position: absolute;
+            right: 0.45rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        i {
+            font-size: 0.75em;
+        }
+    }
+    .filterBtn {
+        font-size: 0.5em !important;
+        color: white;
+        background: #ff8a0d !important;
+        border: none;
+        cursor: pointer;
+        box-shadow: none !important;
+        transition: all 0.3s ease;
+
+        &:hover,
+        &:focus {
+            filter: brightness(0.8);
+        }
+        span {
+            font-size: 0.5em !important;
+        }
+    }
+}
+
+.groupItem {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+}
+
+.price-range-wrapper {
+    margin-bottom: 1rem;
+
+    .price-range {
+        display: flex;
+        max-width: 250px;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 1rem;
+
+        input {
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100%;
+            display: block;
+        }
+    }
+    .price-slider-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .price-slider {
+            width: 90%;
+            display: inline-block;
+            margin: 0 auto;
+        }
+    }
+}

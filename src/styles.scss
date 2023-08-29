@@ -32,15 +32,73 @@ h5,
 h6 {
     font-family: Montserrat, sans-serif;
     font-weight: 800;
+    margin: 0;
+    line-height: 2;
 }
 h1 {
     font-size: 2em;
-    margin: 1em 0;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 .p-divider-horizontal.p-divider-left {
     margin: 0.5rem 0;
     &::before {
         border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+}
+.p-accordion {
+    .p-accordion-tab {
+        background: transparent !important;
+        color: white !important;
+
+        .p-accordion-content {
+            background: transparent !important;
+            color: white !important;
+            border: none;
+            padding: 1.25em 0.5em;
+        }
+    }
+    .p-accordion-header .p-accordion-header-link {
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        background: transparent !important;
+        color: white !important;
+        border-radius: 0;
+        padding: 1em 0.25em;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background: transparent !important;
+            color: white !important;
+            box-shadow: none !important;
+        }
+    }
+}
+
+.p-slider {
+    background: rgba(255, 255, 255, 0.5);
+    .p-slider-handle {
+        background: #ff8a0d;
+        border: 2px solid #ff8a0d;
+        &:hover,
+        &:focus,
+        &:active {
+            background: #ff8a0d !important;
+            border-color: #ff8a0d !important;
+        }
+    }
+    .p-slider-range {
+        background: #ff8a0d;
     }
 }
 
@@ -56,7 +114,7 @@ h1 {
     }
 
     .p-overlaypanel-content {
-        padding: 0.75em 1em;
+        padding: 0.75em 1.5em;
     }
 }
 .p-menu .p-menuitem > .p-menuitem-content .p-menuitem-link {
@@ -103,6 +161,15 @@ h1 {
     color: white;
     cursor: pointer;
     font-size: 1em;
+}
+.resetInput {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 0.75em;
+    padding: 0.75em 1em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 .btnPrimary {
     border: none;

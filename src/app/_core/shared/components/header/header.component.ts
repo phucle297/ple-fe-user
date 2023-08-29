@@ -3,7 +3,7 @@ import {
   removeEventListeners,
   setupAccountChangeListener,
   setupNetworkChangeListener,
-} from '@app/_core/utils/wallet-helpers';
+} from '@app/_core/helpers/wallet-helpers';
 import { environment } from '@env/environment';
 import { MessageService } from 'primeng/api';
 import Web3 from 'web3';
