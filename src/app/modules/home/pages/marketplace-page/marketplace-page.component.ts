@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { debounceTime } from 'rxjs/operators';
 import { SearchAndFilterComponent } from './components/search-and-filter/search-and-filter.component';
+import { IProductItem } from '@app/_core/interfaces/ProductItem.interface';
+import { productListMock } from '@app/_core/mocks/ProductList.mock';
 @Component({
   selector: 'app-marketplace-page',
   templateUrl: './marketplace-page.component.html',
@@ -9,8 +11,11 @@ import { SearchAndFilterComponent } from './components/search-and-filter/search-
 export class MarketplacePageComponent {
   @ViewChild('searchAndFilter', { static: true })
   searchAndFilterComponent!: SearchAndFilterComponent;
+  listItems: IProductItem[] = [];
 
-  constructor() {}
+  constructor() {
+    this.listItems = productListMock;
+  }
 
   ngOnInit() {
     this.setupFormChangeListeners();

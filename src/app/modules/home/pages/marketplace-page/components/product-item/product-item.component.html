@@ -1,0 +1,27 @@
+<p-card
+  [header]="item.nftId | shortenAddress"
+  [subheader]="item.owner | shortenAddress"
+  class="card"
+>
+  <ng-template pTemplate="header">
+    <img
+      alt="Card"
+      src="https://primefaces.org/cdn/primeng/images/usercard.png"
+    />
+  </ng-template>
+
+  <div class="body">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis at
+    quidem quae, libero deserunt id voluptatem reprehenderit nisi aut omnis.
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton label="Save" icon="pi pi-check"></button>
+    <button
+      pButton
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-secondary"
+      [style]="{ 'margin-left': '.5em' }"
+    ></button>
+  </ng-template>
+</p-card>

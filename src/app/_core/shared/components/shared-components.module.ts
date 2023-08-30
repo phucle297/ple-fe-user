@@ -9,7 +9,7 @@ const components = [HeaderComponent, SidebarComponent, CheckboxCustomComponent];
 const pipes = [ShortenAddressPipe];
 @NgModule({
   imports: [PrimeNgModule],
-  exports: [...components],
+  exports: [...components, ...pipes],
   declarations: [...components, ...pipes],
 })
 export class SharedComponentsModule {}
