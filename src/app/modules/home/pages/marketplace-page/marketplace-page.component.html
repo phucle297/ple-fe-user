@@ -3,6 +3,11 @@
     <h1>Marketplace</h1>
     <app-search-and-filter #searchAndFilter></app-search-and-filter>
 
-    <app-product-list [listItems]="listItems"></app-product-list>
+    <app-product-list
+      [listItems]="listItems"
+      (handleModal)="
+        handleModal({ type: $event.type, bool: $event.bool, item: $event.item })
+      "
+    ></app-product-list>
   </section>
 </app-home-layout>

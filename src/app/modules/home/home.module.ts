@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SearchAndFilterComponent } from './pages/marketplace-page/components/search-and-filter/search-and-filter.component';
 import { ProductListComponent } from './pages/marketplace-page/components/product-list/product-list.component';
 import { ProductItemComponent } from './pages/marketplace-page/components/product-item/product-item.component';
+import { NftDetailPageComponent } from './pages/nft-detail-page/nft-detail-page.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ProductItemComponent } from './pages/marketplace-page/components/produc
     SearchAndFilterComponent,
     ProductListComponent,
     ProductItemComponent,
+    NftDetailPageComponent,
   ],
   imports: [
     CommonModule,

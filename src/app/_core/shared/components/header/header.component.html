@@ -1,10 +1,10 @@
 <p-toast position="bottom-right"></p-toast>
 <header class="header">
-  <button class="btnSecondary btn" (click)="addCustomToken()">
+  <button class="secondaryBtn btn" (click)="addCustomToken()">
     Add token to your wallet
   </button>
 
-  <button class="btnPrimary btn" (click)="connectWallet()" *ngIf="!account">
+  <button class="primaryBtn btn" (click)="connectWallet()" *ngIf="!account">
     Connect your wallet
   </button>
 
@@ -13,11 +13,7 @@
       <i class="pi pi-sign-out" style="margin-right: 10px"></i>Disconnect
     </button>
   </p-overlayPanel>
-  <button
-    (click)="op.toggle($event)"
-    class="btnThird btn btnAddress"
-    *ngIf="account"
-  >
+  <button (click)="op.toggle($event)" class="primaryBtn btn" *ngIf="account">
     {{ account | shortenAddress }}
   </button>
 </header>

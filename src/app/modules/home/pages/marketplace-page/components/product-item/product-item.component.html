@@ -1,27 +1,37 @@
-<p-card
-  [header]="item.nftId | shortenAddress"
-  [subheader]="item.owner | shortenAddress"
-  class="card"
->
-  <ng-template pTemplate="header">
+<a (click)="handleClickCard()">
+  <div class="card">
     <img
-      alt="Card"
-      src="https://primefaces.org/cdn/primeng/images/usercard.png"
+      [src]="item.image || 'https://picsum.photos/seed/' + item.nftId + '/300'"
+      alt=""
     />
-  </ng-template>
 
-  <div class="body">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis at
-    quidem quae, libero deserunt id voluptatem reprehenderit nisi aut omnis.
+    <h2>{{ item.nftId | shortenAddress }}</h2>
+    <small>{{ item.owner | shortenAddress }}</small>
+
+    <div>
+      <div *ngFor="let attr of item.attributes | keyvalue">
+        {{ attr.key }}: {{ attr.value }}
+      </div>
+    </div>
+    <div class="controls">
+      <button
+        class="primaryBtn"
+        icon="pi pi-check"
+        (mouseover)="onMouseOverControlBtn()"
+        (mouseleave)="onMouseLeaveControlBtn()"
+        (click)="onClickControlBtn('trading')"
+      >
+        Trading
+      </button>
+      <button
+        class="secondaryBtn"
+        icon="pi pi-times"
+        (mouseover)="onMouseOverControlBtn()"
+        (mouseleave)="onMouseLeaveControlBtn()"
+        (click)="onClickControlBtn('auction')"
+      >
+        Auction
+      </button>
+    </div>
   </div>
-  <ng-template pTemplate="footer">
-    <button pButton label="Save" icon="pi pi-check"></button>
-    <button
-      pButton
-      label="Cancel"
-      icon="pi pi-times"
-      class="p-button-secondary"
-      [style]="{ 'margin-left': '.5em' }"
-    ></button>
-  </ng-template>
-</p-card>
+</a>

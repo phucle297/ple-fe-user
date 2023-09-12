@@ -12,6 +12,9 @@ export class MarketplacePageComponent {
   @ViewChild('searchAndFilter', { static: true })
   searchAndFilterComponent!: SearchAndFilterComponent;
   listItems: IProductItem[] = [];
+  isOpenModalTrading: boolean = false;
+  isOpenModalAuction: boolean = false;
+  chosenItem: IProductItem = {} as IProductItem;
 
   constructor() {
     this.listItems = productListMock;
@@ -37,5 +40,33 @@ export class MarketplacePageComponent {
     // this.apiService.getProducts(formValue).subscribe((data) => {
     // Handle API response and update your component's data
     // });
+  }
+
+  handleModal({
+    type,
+    bool,
+    item,
+  }: {
+    type: string;
+    bool: boolean;
+    item: IProductItem;
+  }) {
+    switch (type) {
+      case 'trading': {
+        this.isOpenModalTrading = bool;
+        this.isOpenModalAuction = false;
+        break;
+      }
+      case 'auction': {
+        this.isOpenModalAuction = bool;
+        this.isOpenModalTrading = false;
+        break;
+      }
+      default:
+        this.isOpenModalTrading = false;
+        this.isOpenModalAuction = false;
+        return;
+    }
+    this.chosenItem = item;
   }
 }

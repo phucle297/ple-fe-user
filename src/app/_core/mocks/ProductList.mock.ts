@@ -5,7 +5,7 @@ export const productListMock = [
       name: 'name1',
       description: 'description1',
     },
-    owner: 'owner1',
+    owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
   },
   {
     nftId: 'string2',
@@ -13,7 +13,7 @@ export const productListMock = [
       name: 'name2',
       description: 'description2',
     },
-    owner: 'owner2',
+    owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
   },
   {
     nftId: 'string3',
@@ -21,7 +21,7 @@ export const productListMock = [
       name: 'name3',
       description: 'description3',
     },
-    owner: 'owner3',
+    owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
   },
   {
     nftId: 'string4',
@@ -29,7 +29,7 @@ export const productListMock = [
       name: 'name4',
       description: 'description4',
     },
-    owner: 'owner4',
+    owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
   },
   {
     nftId: 'string5',
@@ -37,7 +37,7 @@ export const productListMock = [
       name: 'name5',
       description: 'description5',
     },
-    owner: 'owner5',
+    owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
   },
   {
     nftId: 'string6',
@@ -45,7 +45,7 @@ export const productListMock = [
       name: 'name6',
       description: 'description6',
     },
-    owner: 'owner6',
+    owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
   },
   {
     nftId: 'string7',
@@ -53,7 +53,7 @@ export const productListMock = [
       name: 'name7',
       description: 'description7',
     },
-    owner: 'owner7',
+    owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
   },
   {
     nftId: 'string8',
@@ -61,6 +61,6 @@ export const productListMock = [
       name: 'name8',
       description: 'description8',
     },
-    owner: 'owner8',
+    owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
   },
 ];

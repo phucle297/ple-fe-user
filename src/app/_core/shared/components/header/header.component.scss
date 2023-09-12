@@ -10,20 +10,12 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    z-index: 1;
+    z-index: 100;
     right: 0;
 }
 
 .btn {
     margin-right: 20px;
-}
-
-.btnAddress {
-    border-radius: 50px;
-    overflow: hidden;
-    button {
-        box-shadow: none !important;
-    }
 }
 
 .panel {

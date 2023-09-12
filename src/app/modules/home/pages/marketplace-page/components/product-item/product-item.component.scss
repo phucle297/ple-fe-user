@@ -1,6 +1,27 @@
 .card {
-    background: red;
-    > div {
-        background: red !important;
+    padding: 1.5em;
+    background: #0f1633;
+    border-radius: 8px;
+    z-index: 1;
+    cursor: pointer;
+
+    img {
+        border-radius: 8px;
+        width: 100%;
+    }
+    .controls {
+        margin-top: 1rem;
+        display: flex;
+        gap: 0.5em;
+    }
+
+    a {
+        position: relative;
+        z-index: 1;
+    }
+
+    button {
+        z-index: 100;
+        position: relative;
     }
 }

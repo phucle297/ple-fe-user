@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IProductItem } from '@app/_core/interfaces/ProductItem.interface';
 
 @Component({
@@ -8,4 +8,19 @@ import { IProductItem } from '@app/_core/interfaces/ProductItem.interface';
 })
 export class ProductListComponent {
   @Input('listItems') listItems: IProductItem[] = [];
+  @Output('handleModal') handleModal = new EventEmitter<any>();
+
+  constructor() {}
+
+  handleModalList({
+    type,
+    bool,
+    item,
+  }: {
+    type: string;
+    bool: boolean;
+    item: IProductItem;
+  }) {
+    this.handleModal.emit({ type, bool, item });
+  }
 }
