@@ -4,4 +4,5 @@ export interface IProductItem {
   attributes: object;
   owner: string;
   price?: string;
+  status?: number;
 }

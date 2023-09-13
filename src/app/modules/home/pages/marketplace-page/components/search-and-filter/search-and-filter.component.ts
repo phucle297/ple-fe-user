@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {
   DEFAULT_MAX_PRICE_RANGE,
   MAX_PRICE_RANGE,
@@ -10,17 +11,16 @@ import {
   templateUrl: './search-and-filter.component.html',
   styleUrls: ['./search-and-filter.component.scss'],
 })
-export class SearchAndFilterComponent {
+export class SearchAndFilterComponent implements OnInit {
   minValue: number = 0;
   maxValue: number = MAX_PRICE_RANGE;
-
   priceRange: number[] = [0, DEFAULT_MAX_PRICE_RANGE];
   searchAndFilterForm = new FormGroup({
-    search: new FormControl(''),
-    category: new FormControl(['']),
-    status: new FormControl(['']),
-    priceMin: new FormControl(''),
-    priceMax: new FormControl(''),
+    search: new FormControl(null as string | null),
+    category: new FormControl([] as string[]),
+    status: new FormControl(['expired', 'trading'] as string[]),
+    priceMin: new FormControl(null as string | null),
+    priceMax: new FormControl(null as string | null),
   });
 
   private modifyCheckBox(
@@ -60,6 +60,30 @@ export class SearchAndFilterComponent {
   ) {
     this.searchAndFilterForm.controls[typeOfFormControl].patchValue(value);
   }
+
+  constructor(private activatedRoute: ActivatedRoute) {}
+  ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params) {
+        console.log(params);
+        this.searchAndFilterForm.patchValue({
+          search: params?.['search'] || null,
+          category: params?.['category'] || [],
+          status: params?.['status'] || [],
+          priceMin: params?.['priceMin'] || null,
+          priceMax: params?.['priceMax'] || null,
+        });
+        this.minValue = Number(params?.['priceMin']) || 0;
+        this.maxValue = Number(params?.['priceMax']) || MAX_PRICE_RANGE;
+        this.priceRange = [
+          ...[
+            (this.minValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
+            (this.maxValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
+          ],
+        ];
+      }
+    });
+  }
   handleEventChecked(bool: boolean, nameField: string) {
     switch (nameField) {
       case 'trading':
@@ -80,7 +104,7 @@ export class SearchAndFilterComponent {
   }
 
   onSubmit() {
-    console.log(this.searchAndFilterForm.value);
+    console.log('submit', this.searchAndFilterForm.value);
   }
 
   handlePriceChange(e: any, type: 'min' | 'max' | 'range') {
@@ -144,5 +168,16 @@ export class SearchAndFilterComponent {
 
     this.modifyValueFormControl('priceMin', this.minValue.toString());
     this.modifyValueFormControl('priceMax', this.maxValue.toString());
+  }
+
+  initCheckedStatus(nameField: string): boolean {
+    const fields: string[] = this.searchAndFilterForm.controls['status']
+      .value as string[];
+    return fields?.includes(nameField);
+  }
+  initCheckedCategory(nameField: string): boolean {
+    const fields: string[] = this.searchAndFilterForm.controls['category']
+      .value as string[];
+    return fields?.includes(nameField);
   }
 }

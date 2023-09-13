@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { StatusEnum } from '@app/_core/constants/status-enum';
 import { IProductItem } from '@app/_core/interfaces/ProductItem.interface';
+import { ModalService } from '@app/_core/services/modal.service';
 
 @Component({
   selector: 'app-product-item',
@@ -9,11 +11,10 @@ import { IProductItem } from '@app/_core/interfaces/ProductItem.interface';
 })
 export class ProductItemComponent {
   @Input('item') item: IProductItem = {} as IProductItem;
+  StatusEnum = StatusEnum;
   allowChangePage: boolean = true;
-  isOpenModalTrading: boolean = false;
-  isOpenModalAuction: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private modalService: ModalService) {}
   handleClickCard() {
     if (this.allowChangePage) {
       this.router.navigate(['/nft-detail', this.item.nftId]);
@@ -33,22 +34,21 @@ export class ProductItemComponent {
 
     switch (type) {
       case 'trading': {
-        console.log('trading');
-        this.isOpenModalTrading = true;
+        this.modalService.openModal({
+          type: 'trading',
+          data: this.item,
+        });
         break;
       }
       case 'auction': {
-        console.log('auction');
-        this.isOpenModalAuction = true;
+        this.modalService.openModal({
+          type: 'auction',
+          data: this.item,
+        });
         break;
       }
       default:
         return;
     }
-  }
-
-  handleCloseModal() {
-    this.isOpenModalTrading = false;
-    this.isOpenModalAuction = false;
   }
 }

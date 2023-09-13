@@ -12,7 +12,7 @@
       </button>
     </div>
   </form>
-  <p-overlayPanel #op>
+  <p-overlayPanel #op class="panel" styleClass="panel">
     <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
       <p-accordionTab header="Status">
         <div class="status">
@@ -20,11 +20,13 @@
             <div class="item">
               <app-checkbox-custom
                 (handleEventChecked)="handleEventChecked($event, 'trading')"
+                [checked]="initCheckedStatus('trading')"
               >
                 <span>Trading</span>
               </app-checkbox-custom>
               <app-checkbox-custom
                 (handleEventChecked)="handleEventChecked($event, 'auction')"
+                [checked]="initCheckedStatus('auction')"
               >
                 <span>Auction</span>
               </app-checkbox-custom>
@@ -32,11 +34,13 @@
             <div class="item">
               <app-checkbox-custom
                 (handleEventChecked)="handleEventChecked($event, 'expired')"
+                [checked]="initCheckedStatus('expired')"
               >
                 <span>Expired</span>
               </app-checkbox-custom>
               <app-checkbox-custom
                 (handleEventChecked)="handleEventChecked($event, 'static')"
+                [checked]="initCheckedStatus('static')"
               >
                 <span>Static</span>
               </app-checkbox-custom>
@@ -50,11 +54,13 @@
             <div class="item">
               <app-checkbox-custom
                 (handleEventChecked)="handleEventChecked($event, 'nfn')"
+                [checked]="initCheckedCategory('nfn')"
               >
                 <span>NFN</span>
               </app-checkbox-custom>
               <app-checkbox-custom
                 (handleEventChecked)="handleEventChecked($event, 'nnm')"
+                [checked]="initCheckedCategory('nnm')"
               >
                 <span>NNM</span>
               </app-checkbox-custom>
@@ -62,11 +68,13 @@
             <div class="item">
               <app-checkbox-custom
                 (handleEventChecked)="handleEventChecked($event, 'gfn')"
+                [checked]="initCheckedCategory('gfn')"
               >
                 <span>GFN</span>
               </app-checkbox-custom>
               <app-checkbox-custom
                 (handleEventChecked)="handleEventChecked($event, 'kfm')"
+                [checked]="initCheckedCategory('kfm')"
               >
                 <span>KFM</span>
               </app-checkbox-custom>

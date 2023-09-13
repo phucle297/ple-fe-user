@@ -36,7 +36,7 @@
               "node_modules/quill/dist/quill.js"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["src/styles", "node_modules/"]
             }
           },
           "configurations": {

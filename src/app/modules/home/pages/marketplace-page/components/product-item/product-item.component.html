@@ -1,14 +1,45 @@
 <a (click)="handleClickCard()">
   <div class="card">
-    <img
-      [src]="item.image || 'https://picsum.photos/seed/' + item.nftId + '/300'"
-      alt=""
-    />
+    <div class="top">
+      <div
+        class="tag"
+        [ngStyle]="{
+          'background-color':
+            item.status === StatusEnum.TRADING
+              ? '#00b825'
+              : item.status === StatusEnum.AUCTION
+              ? '#3b82f6'
+              : item.status === StatusEnum.EXPIRED
+              ? '#8f8f8f'
+              : '#6c5ce7'
+        }"
+      >
+        <ng-template [ngIf]="item.status === StatusEnum.TRADING">
+          <span>Trading</span>
+        </ng-template>
+        <ng-template [ngIf]="item.status === StatusEnum.AUCTION">
+          <span>Auction</span>
+        </ng-template>
+        <ng-template [ngIf]="item.status === StatusEnum.EXPIRED">
+          <span>Expired</span>
+        </ng-template>
+        <ng-template [ngIf]="item.status === StatusEnum.STATIC">
+          <span>Static</span>
+        </ng-template>
+      </div>
+      <img
+        [src]="
+          item.image || 'https://picsum.photos/seed/' + item.nftId + '/300'
+        "
+        alt=""
+      />
+    </div>
 
     <h2>{{ item.nftId | shortenAddress }}</h2>
     <small>{{ item.owner | shortenAddress }}</small>
 
     <div>
+      <div class="">Price: {{ item.price }}</div>
       <div *ngFor="let attr of item.attributes | keyvalue">
         {{ attr.key }}: {{ attr.value }}
       </div>

@@ -1,0 +1,13 @@
+<div class="modal-overlay" (click)="closeModalByClickOutside()">
+  <div
+    class="modal-content"
+    (mouseover)="onMouseOverCard()"
+    (mouseleave)="onMouseLeaveCard()"
+  >
+    <button (click)="closeModal()" class="close-btn resetBtn btnClose">
+      <i class="pi pi-times"></i>
+    </button>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>
