@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { debounceTime } from 'rxjs/operators';
-import { SearchAndFilterComponent } from './components/search-and-filter/search-and-filter.component';
+import { Router } from '@angular/router';
+import { StatusText } from '@app/_core/constants/status-enum';
 import { IProductItem } from '@app/_core/interfaces/ProductItem.interface';
 import { productListMock } from '@app/_core/mocks/ProductList.mock';
-import { Router } from '@angular/router';
-import { of } from 'rxjs';
 import { ModalService } from '@app/_core/services/modal.service';
+import { debounceTime } from 'rxjs/operators';
+import { SearchAndFilterComponent } from './components/search-and-filter/search-and-filter.component';
 @Component({
   selector: 'app-marketplace-page',
   templateUrl: './marketplace-page.component.html',
@@ -61,11 +61,41 @@ export class MarketplacePageComponent {
   }
 
   private callApiWithFormValues(formValue: any) {
-    // Here, you can call your API service with the form values
-    // and implement pagination logic based on the received data
-    // this.apiService.getProducts(formValue).subscribe((data) => {
-    // Handle API response and update your component's data
-    // });
     console.log(formValue);
+    let newArr = [...productListMock];
+    const { category, priceMax, priceMin, search, status } = formValue;
+
+    if (priceMin && priceMax) {
+      newArr = newArr.filter((item) => {
+        return +item.price >= +priceMin && +item.price <= +priceMax;
+      });
+    }
+
+    if (search) {
+      newArr = newArr.filter((item) => {
+        return (
+          item.attributes.name.toLowerCase().includes(search.toLowerCase()) ||
+          item.attributes.description
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
+          item.owner.toLowerCase().includes(search.toLowerCase()) ||
+          item.nftId.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+    }
+
+    if (Array.isArray(status) && status?.length > 0) {
+      newArr = newArr.filter((item) => {
+        return status.includes(StatusText[item.status].toLowerCase());
+      });
+    }
+
+    if (Array.isArray(category) && category.length > 0) {
+      newArr = newArr.filter((item) => {
+        return category.includes(item.type.toLowerCase());
+      });
+    }
+
+    this.listItems = newArr;
   }
 }

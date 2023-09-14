@@ -1,6 +1,7 @@
 export const productListMock = [
   {
     nftId: 'string6',
+    type: 'NFN',
     price: '600',
     status: 1,
     attributes: {
@@ -11,6 +12,7 @@ export const productListMock = [
   },
   {
     nftId: 'string2',
+    type: 'NFN',
     price: '200',
     status: 1,
     attributes: {
@@ -21,6 +23,7 @@ export const productListMock = [
   },
   {
     nftId: 'string7',
+    type: 'NFN',
     price: '70',
     status: 2,
     attributes: {
@@ -31,6 +34,7 @@ export const productListMock = [
   },
   {
     nftId: 'string3',
+    type: 'NFN',
     price: '30',
     status: 2,
     attributes: {
@@ -42,6 +46,7 @@ export const productListMock = [
 
   {
     nftId: 'string8',
+    type: 'NFN',
     price: '800',
     status: 3,
     attributes: {
@@ -52,6 +57,7 @@ export const productListMock = [
   },
   {
     nftId: 'string4',
+    type: 'NFN',
     price: '400',
     status: 3,
     attributes: {
@@ -62,6 +68,7 @@ export const productListMock = [
   },
   {
     nftId: 'string5',
+    type: 'NFN',
     price: '50',
     status: 0,
     attributes: {
@@ -72,6 +79,7 @@ export const productListMock = [
   },
   {
     nftId: 'string1',
+    type: 'NFN',
     price: '10',
     status: 0,
     attributes: {

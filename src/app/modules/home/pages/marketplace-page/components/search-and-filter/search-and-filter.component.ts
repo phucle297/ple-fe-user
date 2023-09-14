@@ -88,7 +88,7 @@ export class SearchAndFilterComponent implements OnInit {
       case 'trading':
       case 'auction':
       case 'expired':
-      case 'static':
+      case 'asset':
         this.modifyCheckBox('status', bool, nameField);
         break;
       case 'nfn':
