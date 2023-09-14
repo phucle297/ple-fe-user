@@ -8,6 +8,7 @@ import { ModalCustomComponent } from './modal-custom/modal-custom.component';
 import { ModalTradingComponent } from './modal-trading/modal-trading.component';
 import { ModalAuctionComponent } from './modal-auction/modal-auction.component';
 import { UppercaseFirstLetter } from '../pipes/upperCaseFirstLetter.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const components = [
   HeaderComponent,
@@ -19,7 +20,7 @@ const components = [
 ];
 const pipes = [ShortenAddressPipe, UppercaseFirstLetter];
 @NgModule({
-  imports: [PrimeNgModule],
+  imports: [PrimeNgModule, ReactiveFormsModule],
   exports: [...components, ...pipes],
   declarations: [...components, ...pipes],
 })

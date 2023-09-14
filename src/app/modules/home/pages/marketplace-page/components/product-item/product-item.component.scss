@@ -4,6 +4,13 @@
     border-radius: 8px;
     z-index: 1;
     cursor: pointer;
+
+    .owner {
+        margin-top: 0;
+        font-size: 0.8em;
+        color: #999;
+    }
+
     .top {
         position: relative;
         .tag {
@@ -37,5 +44,13 @@
     button {
         z-index: 100;
         position: relative;
+    }
+}
+
+.item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    p {
+        margin: 0;
     }
 }

@@ -1,1 +1,103 @@
-<p>modal-auction works!</p>
+<div class="modal">
+  <h2>Auction</h2>
+
+  <div *ngIf="data">
+    <p *ngIf="data?.nftId">NftId</p>
+    <p class="fakeInput">{{ data.nftId | shortenAddress }}</p>
+    <div *ngFor="let attr of data.attributes | keyvalue">
+      <p>{{ attr.key | uppercaseFirstLetter }}</p>
+      <p class="fakeInput">{{ attr.value }}</p>
+    </div>
+    <p><b>Highest bid</b></p>
+    <p class="fakeInput">{{ data.price }}</p>
+    <p><b>Bidding Price</b></p>
+    <input
+      type="number"
+      name="biddingPrice"
+      id="biddingPrice"
+      class="input"
+      [formControl]="biddingPrice"
+    />
+    <div class="erorrs" *ngIf="biddingPrice?.dirty || biddingPrice?.touched">
+      <p class="error" *ngIf="biddingPrice?.errors?.['required']">
+        Bidding price is required
+      </p>
+      <p class="error" *ngIf="biddingPrice?.errors?.['min']">
+        Bidding price must be greater than 0
+      </p>
+      <p class="error" *ngIf="biddingPrice?.errors?.['invalid']">
+        Bidding price must be a number
+      </p>
+      <p
+        class="error"
+        *ngIf="biddingPrice.value! <= data.price && !biddingPrice?.errors"
+      >
+        Must be greater than highest bid
+      </p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button
+      [disabled]="biddingPrice.value! <= data.price || biddingPrice.errors"
+      [ngClass]="{
+        secondaryBtn: biddingPrice.value! > data.price && !biddingPrice.errors,
+        disabledBtn: biddingPrice.value! <= data.price || biddingPrice.errors
+      }"
+      (click)="showDialog()"
+    >
+      Bid
+    </button>
+    <button class="cancelBtn" (click)="closeModal()">Close</button>
+  </div>
+
+  <p-dialog
+    header="Confirm Bidding"
+    [(visible)]="visible"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div *ngIf="status === 'init'">
+      <p>
+        Are you sure you want to bid this NFT with {{ biddingPrice.value }} PLE?
+      </p>
+      <div class="controls">
+        <button class="secondaryBtn" (click)="bidNft()">Buy</button>
+        <button class="cancelBtn" (click)="closeDialog()">Cancel</button>
+      </div>
+    </div>
+
+    <div *ngIf="status === 'loading'">
+      <div class="icon">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+      </div>
+      <p>Loading...</p>
+    </div>
+
+    <div *ngIf="status === 'success'">
+      <div class="icon success">
+        <i class="pi pi-check" style="font-size: 2rem"></i>
+      </div>
+      <p>Success</p>
+      <div class="controls">
+        <button class="secondaryBtn closeBtn" (click)="closeDialog()">
+          Close
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="status === 'failed'">
+      <div class="icon failed">
+        <i class="pi pi-times" style="font-size: 2rem"></i>
+      </div>
+      <p>Failed</p>
+      <div class="controls">
+        <button class="secondaryBtn closeBtn" (click)="closeDialog()">
+          Close
+        </button>
+      </div>
+    </div>
+  </p-dialog>
+</div>

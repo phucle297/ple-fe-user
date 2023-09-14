@@ -1,0 +1,88 @@
+.modal {
+    h2 {
+        text-align: center;
+    }
+
+    p {
+        font-size: 0.8em;
+    }
+
+    .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        gap: 1rem;
+
+        button {
+            width: 100%;
+        }
+    }
+}
+
+:host ::ng-deep {
+    .p-dialog {
+        color: white;
+        background: #000330;
+        max-width: 30vw !important;
+        text-align: center;
+    }
+
+    .p-dialog-header {
+        color: white;
+        background: #000330;
+        display: block;
+        position: relative;
+        padding: 0;
+        padding-top: 2.5em;
+    }
+    .p-dialog-header-icon {
+        position: absolute !important;
+        top: 0.8em;
+        right: 0.8em;
+        svg {
+            fill: white;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            border: none !important;
+            background: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            svg {
+                fill: #999;
+            }
+        }
+    }
+    .p-dialog-title {
+        display: block;
+        text-align: center;
+    }
+
+    .p-dialog-content {
+        color: white;
+        background: #000330;
+        p {
+            font-size: 1em;
+        }
+    }
+}
+
+.icon {
+    margin-top: 1em;
+}
+
+.failed {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+.closeBtn {
+    width: 50% !important;
+    margin: 0 auto;
+}

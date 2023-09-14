@@ -36,12 +36,20 @@
     </div>
 
     <h2>{{ item.nftId | shortenAddress }}</h2>
-    <small>{{ item.owner | shortenAddress }}</small>
+    <p class="owner">{{ item.owner | shortenAddress }}</p>
 
     <div>
-      <div class="">Price: {{ item.price }}</div>
-      <div *ngFor="let attr of item.attributes | keyvalue">
-        {{ attr.key }}: {{ attr.value }}
+      <div class="item">
+        <p>Price</p>
+        <p>
+          {{ item.price }}
+        </p>
+      </div>
+      <div class="item" *ngFor="let attr of item.attributes | keyvalue">
+        <p>
+          {{ attr.key | uppercaseFirstLetter }}
+        </p>
+        <p>{{ attr.value }}</p>
       </div>
     </div>
     <div class="controls">

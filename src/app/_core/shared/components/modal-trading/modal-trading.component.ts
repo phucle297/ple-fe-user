@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from '@app/_core/services/modal.service';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-modal-trading',
@@ -39,7 +39,6 @@ export class ModalTradingComponent implements OnInit {
   }
 
   buyNft() {
-    console.log('123');
     this.statusObject.next('loading');
     setTimeout(() => {
       if (Math.random() > 0.5) {
