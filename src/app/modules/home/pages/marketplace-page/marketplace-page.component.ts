@@ -14,10 +14,8 @@ import { ModalService } from '@app/_core/services/modal.service';
 export class MarketplacePageComponent {
   @ViewChild('searchAndFilter', { static: true })
   searchAndFilterComponent!: SearchAndFilterComponent;
+  typeModal!: string;
   listItems: IProductItem[] = [];
-  isOpenModalTrading: boolean = false;
-  isOpenModalAuction: boolean = false;
-  chosenItem: IProductItem = {} as IProductItem;
   isOpenModal: boolean = false;
 
   constructor(private router: Router, private modalService: ModalService) {
@@ -27,8 +25,13 @@ export class MarketplacePageComponent {
   ngOnInit() {
     this.setupFormChangeListeners();
     this.modalService.showModal$.subscribe((bool) => {
-      console.log(bool);
       this.isOpenModal = bool;
+    });
+    this.modalService.modalData$.subscribe((data) => {
+      const listType = ['auction', 'trading'];
+      if (listType.includes(data?.type)) {
+        this.typeModal = data.type;
+      }
     });
   }
 
@@ -64,33 +67,5 @@ export class MarketplacePageComponent {
     // Handle API response and update your component's data
     // });
     console.log(formValue);
-  }
-
-  handleModal({
-    type,
-    bool,
-    item,
-  }: {
-    type: string;
-    bool: boolean;
-    item: IProductItem;
-  }) {
-    switch (type) {
-      case 'trading': {
-        this.isOpenModalTrading = bool;
-        this.isOpenModalAuction = false;
-        break;
-      }
-      case 'auction': {
-        this.isOpenModalAuction = bool;
-        this.isOpenModalTrading = false;
-        break;
-      }
-      default:
-        this.isOpenModalTrading = false;
-        this.isOpenModalAuction = false;
-        return;
-    }
-    this.chosenItem = item;
   }
 }

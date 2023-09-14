@@ -1,14 +1,14 @@
 // modal.service.ts
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ModalService {
+export class ModalService implements OnDestroy {
   private showModalSubject = new BehaviorSubject<boolean>(false);
   showModal$ = this.showModalSubject.asObservable();
-  private modalDataSubject = new BehaviorSubject<any>(null);
+  private modalDataSubject = new BehaviorSubject<any>({});
   modalData$ = this.modalDataSubject.asObservable();
 
   openModal(modalData: any) {
@@ -17,7 +17,12 @@ export class ModalService {
   }
 
   closeModal() {
-    this.modalDataSubject.next(null); // Clear custom parameters
+    this.modalDataSubject.next({}); // Clear custom parameters
     this.showModalSubject.next(false);
+  }
+
+  ngOnDestroy(): void {
+    this.modalDataSubject.unsubscribe();
+    this.showModalSubject.unsubscribe();
   }
 }

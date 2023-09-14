@@ -19,7 +19,6 @@ export class UserService {
         environment.PLE_TOKEN_ADDRESS
       );
 
-      console.log(pleContract.methods);
     } catch (error) {
       console.error(error);
     }

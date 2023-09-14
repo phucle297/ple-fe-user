@@ -23,8 +23,8 @@
         <ng-template [ngIf]="item.status === StatusEnum.EXPIRED">
           <span>Expired</span>
         </ng-template>
-        <ng-template [ngIf]="item.status === StatusEnum.STATIC">
-          <span>Static</span>
+        <ng-template [ngIf]="item.status === StatusEnum.ASSET">
+          <span>Asset</span>
         </ng-template>
       </div>
       <img
@@ -46,20 +46,28 @@
     </div>
     <div class="controls">
       <button
-        class="primaryBtn"
         icon="pi pi-check"
         (mouseover)="onMouseOverControlBtn()"
         (mouseleave)="onMouseLeaveControlBtn()"
         (click)="onClickControlBtn('trading')"
+        [disabled]="item.status !== StatusEnum.TRADING"
+        [ngClass]="{
+          primaryBtn: item.status === StatusEnum.TRADING,
+          disabledBtn: item.status !== StatusEnum.TRADING
+        }"
       >
         Trading
       </button>
       <button
-        class="secondaryBtn"
         icon="pi pi-times"
         (mouseover)="onMouseOverControlBtn()"
         (mouseleave)="onMouseLeaveControlBtn()"
         (click)="onClickControlBtn('auction')"
+        [disabled]="item.status !== StatusEnum.AUCTION"
+        [ngClass]="{
+          secondaryBtn: item.status === StatusEnum.AUCTION,
+          disabledBtn: item.status !== StatusEnum.AUCTION
+        }"
       >
         Auction
       </button>

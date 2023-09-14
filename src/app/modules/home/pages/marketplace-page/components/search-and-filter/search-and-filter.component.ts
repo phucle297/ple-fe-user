@@ -65,7 +65,6 @@ export class SearchAndFilterComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params) {
-        console.log(params);
         this.searchAndFilterForm.patchValue({
           search: params?.['search'] || null,
           category: params?.['category'] || [],

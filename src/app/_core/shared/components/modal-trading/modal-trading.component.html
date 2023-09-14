@@ -1,0 +1,63 @@
+<div class="modal">
+  <h2>Trading</h2>
+
+  <div *ngIf="data">
+    <p *ngIf="data?.nftId">NftId</p>
+    <p class="fakeInput">{{ data.nftId | shortenAddress }}</p>
+    <div *ngFor="let attr of data.attributes | keyvalue">
+      <p>{{ attr.key | uppercaseFirstLetter }}</p>
+      <p class="fakeInput">{{ attr.value }}</p>
+    </div>
+    <p><b>Price:</b></p>
+    <p class="fakeInput">{{ data.price }}</p>
+  </div>
+
+  <div class="controls">
+    <button class="secondaryBtn" (click)="showDialog()">Buy</button>
+    <button class="cancelBtn" (click)="closeModal()">Close</button>
+  </div>
+
+  <p-dialog
+    header="Confirm purchase"
+    [(visible)]="visible"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div *ngIf="status === 'init'">
+      <p>Are you sure you want to buy this NFT?</p>
+      <div class="controls">
+        <button class="secondaryBtn" (click)="buyNft()">Buy</button>
+        <button class="cancelBtn" (click)="closeDialog()">Cancel</button>
+      </div>
+    </div>
+
+    <div *ngIf="status === 'loading'">
+      <div class="icon">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+      </div>
+      <p>Loading...</p>
+    </div>
+
+    <div *ngIf="status === 'success'">
+      <div class="icon success">
+        <i class="pi pi-check" style="font-size: 2rem"></i>
+      </div>
+      <p>Success</p>
+      <div class="controls">
+        <button class="secondaryBtn closeBtn" (click)="closeDialog()">Close</button>
+      </div>
+    </div>
+
+    <div *ngIf="status === 'failed'">
+      <div class="icon failed">
+        <i class="pi pi-times" style="font-size: 2rem"></i>
+      </div>
+      <p>Failed</p>
+      <div class="controls">
+        <button class="secondaryBtn closeBtn" (click)="closeDialog()">Close</button>
+      </div>
+    </div>
+  </p-dialog>
+</div>
