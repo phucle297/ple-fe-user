@@ -88,6 +88,27 @@ a {
         }
     }
 }
+.p-scrolltop {
+    background: #ff8a0d !important;
+    border: none;
+    outline: none;
+    color: #fff;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    height: 2.5em;
+    width: 2.5em;
+
+    &:hover,
+    &:focus,
+    &:active {
+        box-shadow: 0 0 10px #ff8a0d !important;
+        background: #ff8a0d;
+    }
+
+    .p-icon {
+        width: 0.6em !important;
+    }
+}
 
 .p-slider {
     background: rgba(255, 255, 255, 0.5);

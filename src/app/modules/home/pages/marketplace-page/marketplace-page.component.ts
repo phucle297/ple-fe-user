@@ -61,7 +61,6 @@ export class MarketplacePageComponent {
   }
 
   private callApiWithFormValues(formValue: any) {
-    console.log(formValue);
     let newArr = [...productListMock];
     const { category, priceMax, priceMin, search, status } = formValue;
 
