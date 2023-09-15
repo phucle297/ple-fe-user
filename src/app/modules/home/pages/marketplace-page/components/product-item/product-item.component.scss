@@ -13,6 +13,22 @@
 
     .top {
         position: relative;
+
+        img {
+            height: 200px;
+            width: 100%;
+
+            @media (min-width: 1440px) {
+                height: 250px;
+            }
+            @media (min-width: 1920px) {
+                height: 280px;
+            }
+            @media (min-width: 2560px) {
+                height: 350px;
+            }
+        }
+
         .tag {
             position: absolute;
             background: red;

@@ -13,6 +13,7 @@ import { SearchAndFilterComponent } from './pages/marketplace-page/components/se
 import { ProductListComponent } from './pages/marketplace-page/components/product-list/product-list.component';
 import { ProductItemComponent } from './pages/marketplace-page/components/product-item/product-item.component';
 import { NftDetailPageComponent } from './pages/nft-detail-page/nft-detail-page.component';
+import { PoolPageComponent } from './pages/pool-page/pool-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { NftDetailPageComponent } from './pages/nft-detail-page/nft-detail-page.
     ProductListComponent,
     ProductItemComponent,
     NftDetailPageComponent,
+    PoolPageComponent,
   ],
   imports: [
     CommonModule,

@@ -4,6 +4,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
 import { MarketplacePageComponent } from './pages/marketplace-page/marketplace-page.component';
 import { NftDetailPageComponent } from './pages/nft-detail-page/nft-detail-page.component';
+import { PoolPageComponent } from './pages/pool-page/pool-page.component';
 
 const routes: Routes = [
   { path: '', component: WelcomePageComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
     path: 'nft-detail',
     children: [{ path: ':id', component: NftDetailPageComponent }],
   },
+  { path: 'pool', component: PoolPageComponent },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
 
