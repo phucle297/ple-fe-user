@@ -9,6 +9,7 @@ import { ModalTradingComponent } from './modal-trading/modal-trading.component';
 import { ModalAuctionComponent } from './modal-auction/modal-auction.component';
 import { UppercaseFirstLetter } from '../pipes/upperCaseFirstLetter.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HistoryNftComponent } from './history-nft/history-nft.component';
 
 const components = [
   HeaderComponent,
@@ -17,6 +18,7 @@ const components = [
   ModalCustomComponent,
   ModalTradingComponent,
   ModalAuctionComponent,
+  HistoryNftComponent,
 ];
 const pipes = [ShortenAddressPipe, UppercaseFirstLetter];
 @NgModule({
