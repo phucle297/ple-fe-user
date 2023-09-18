@@ -4,7 +4,15 @@
       <img src="assets/images/fulllogo.png" alt="logo" class="logo" />
     </a>
     <div class="main-menu">
-      <p-menu [model]="items"></p-menu>
+      <div
+        class="item"
+        [ngClass]="{ active: item.routerLink[0] === route }"
+        *ngFor="let item of items"
+      >
+        <a [routerLink]="item.routerLink[0]" routerLinkActive="active">
+          <i [class]="item.icon"></i> {{ item.label }}</a
+        >
+      </div>
     </div>
   </div>
   <div class="footer-menu">

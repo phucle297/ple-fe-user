@@ -17,6 +17,33 @@
     .main-menu {
         display: flex;
         justify-content: center;
+        flex-direction: column;
+        margin: 0.25rem 1rem;
+
+        .item {
+            padding: 0.25rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: #0f1633;
+
+            &:hover,
+            &:active,
+            &:focus {
+                transition: all 0.3s ease;
+                background: #1c2546;
+                color: white;
+            }
+
+            a {
+                padding: 0.5rem 1.25rem;
+                display: block;
+            }
+        }
+
+        .active {
+            background: #1c2546;
+            color: white;
+        }
     }
 
     .footer-menu {

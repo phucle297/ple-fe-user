@@ -12,4 +12,5 @@ export const environment = {
   ADMIN_ADDRESS: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
   ETHEREUM_NETWORK: 'sepolia',
   INFURA_API_KEY: 'ef80c034d02443eaa9220763bf1169de',
+  API_BASE_URL: 'http://localhost:8080/api',
 };

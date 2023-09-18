@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit, OnDestroy {
   items = [
     {
       label: 'Home',
@@ -28,4 +30,19 @@ export class SidebarComponent {
       routerLink: ['/events'],
     },
   ];
+
+  route: string = '';
+  routerSubscription!: Subscription;
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.routerSubscription = this.router.events.subscribe(() => {
+      this.route = this.router.url;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routerSubscription.unsubscribe();
+  }
 }
