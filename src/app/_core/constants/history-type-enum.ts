@@ -9,6 +9,7 @@ export const HistoryTypeEnum = {
   CANCEL_AUCTION: 'cancel_auction',
   BID: 'bid',
   END_AUCTION: 'end_auction',
+  END_TRADING: 'end_trading',
   WITHDRAW: 'withdraw',
   EXPIRED: 'expired',
 };

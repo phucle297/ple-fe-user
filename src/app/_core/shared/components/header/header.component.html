@@ -8,12 +8,7 @@
     Connect your wallet
   </button>
 
-  <p-overlayPanel #op class="panel">
-    <button class="resetBtn" (click)="handleLogout(op)">
-      <i class="pi pi-sign-out" style="margin-right: 10px"></i>Disconnect
-    </button>
-  </p-overlayPanel>
-  <button (click)="op.toggle($event)" class="primaryBtn btn" *ngIf="account">
+  <button (click)="connectWallet()" class="primaryBtn btn" *ngIf="account">
     {{ account | shortenAddress }}
   </button>
 </header>

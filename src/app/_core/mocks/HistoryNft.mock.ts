@@ -71,7 +71,7 @@ export const historyNftMock: IHistoryNft[] = [
     price: '10',
     date: '1694762518',
     txnHash: '0x12345',
-    action: 'bid',
+    action: 'cancel_trading',
   },
   {
     from: '0x63Bc0514ce578a71611A0EaEd8377058FaE4E750',

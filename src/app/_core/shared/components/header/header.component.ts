@@ -4,6 +4,7 @@ import {
   setupAccountChangeListener,
   setupNetworkChangeListener,
 } from '@app/_core/helpers/wallet-helpers';
+import { WalletService } from '@app/_core/services/wallet.service';
 import { environment } from '@env/environment';
 import { MessageService } from 'primeng/api';
 import Web3 from 'web3';
@@ -18,14 +19,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
   web3: Web3;
   account: string | undefined;
 
-  constructor(private messageService: MessageService) {
+  constructor(
+    private messageService: MessageService,
+    private walletService: WalletService
+  ) {
     this.web3 = new Web3(window.ethereum);
+    walletService.walletLocalStorage.subscribe((wallet: any) => {
+      this.account = wallet;
+    });
   }
 
-  private handleAccountsChanged(accounts: string[]) {
+  private handleAccountsChanged(accounts: string[], ...args: any[]) {
+    const walletService = args[0] as WalletService;
     if (accounts.length === 0) {
       console.log('Wallet disconnected.');
     } else {
+      walletService.wallet = accounts[0];
       console.log('Connected account changed:', accounts[0]);
     }
   }
@@ -36,8 +45,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.checkWalletStatus();
-    setupAccountChangeListener(this.handleAccountsChanged);
-    setupNetworkChangeListener(this.handleNetworkChanged);
+    setupAccountChangeListener(this.handleAccountsChanged, this.walletService);
+    setupNetworkChangeListener(this.handleNetworkChanged, this.walletService);
   }
 
   ngOnDestroy() {
@@ -45,10 +54,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   async checkWalletStatus() {
     if (typeof window.ethereum === 'undefined') {
+      localStorage.removeItem('wallet');
+      this.walletService.wallet = '';
       console.log('No wallet extension detected.');
     } else if (window.ethereum.selectedAddress) {
+      this.walletService.wallet = window.ethereum.selectedAddress;
+      this.account = window.ethereum.selectedAddress;
       console.log('Wallet connected:', window.ethereum.selectedAddress);
     } else {
+      this.walletService.wallet = '';
       console.log('Wallet extension available but not connected.');
     }
   }
@@ -59,6 +73,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         .request({ method: 'eth_requestAccounts' })
         .then((accounts: string[]) => {
           this.account = accounts[0];
+          localStorage.setItem('wallet', accounts[0]);
         });
       this.messageService.add({
         severity: 'success',
@@ -73,16 +88,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         detail: 'Error connecting wallet',
       });
     }
-  }
-
-  handleLogout(op: any) {
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Info',
-      detail: 'Wallet disconnected',
-    });
-    this.account = undefined;
-    op.hide();
   }
 
   async addCustomToken() {

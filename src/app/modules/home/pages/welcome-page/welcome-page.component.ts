@@ -25,12 +25,12 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
   @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
   @ViewChild('exploreBtn', { static: true }) exploreBtn!: ElementRef;
   resizeObservable$!: Observable<Event>;
-  resizeSubscription$!: Subscription;
+  resizeSubscription!: Subscription;
   height = window.innerHeight;
   width = window.innerWidth;
-
   simulation: any;
   nodes!: INode[];
+
   constructor(private router: Router) {
     this.generateBallsData();
   }
@@ -49,7 +49,7 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.resizeObservable$ = fromEvent(window, 'resize');
-    this.resizeSubscription$ = this.resizeObservable$.subscribe(() => {
+    this.resizeSubscription = this.resizeObservable$.subscribe(() => {
       this.width = window.innerWidth;
       this.height = window.innerHeight;
     });
@@ -184,7 +184,7 @@ export class WelcomePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.resizeSubscription$.unsubscribe();
+    this.resizeSubscription.unsubscribe();
     this.simulation.stop();
     d3.select(this.chartContainer.nativeElement).selectAll('svg').remove();
   }

@@ -1,3 +1,51 @@
 .wrapper {
     padding: 20px 40px;
+
+    .top {
+        display: flex;
+        gap: 2rem;
+
+        .img {
+            width: 40%;
+            height: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 80%;
+                height: 80%;
+                border-radius: 8px;
+            }
+        }
+
+        .owner {
+            font-size: 0.9em;
+            margin-bottom: 1em;
+            color: #8e8e8e;
+            margin-top: 0;
+        }
+
+        .attr {
+            width: 100%;
+
+            .item {
+                display: flex;
+                gap: 1rem;
+                margin-bottom: 0.25em;
+                p {
+                    margin: 0;
+                }
+                > *:first-child {
+                    width: 30%;
+                }
+            }
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+    }
 }

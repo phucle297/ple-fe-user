@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
   DEFAULT_MAX_PRICE_RANGE,
   MAX_PRICE_RANGE,
 } from '@app/_core/constants/price-range';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-and-filter',
   templateUrl: './search-and-filter.component.html',
   styleUrls: ['./search-and-filter.component.scss'],
 })
-export class SearchAndFilterComponent implements OnInit {
+export class SearchAndFilterComponent implements OnInit, OnDestroy {
   minValue: number = 0;
   maxValue: number = MAX_PRICE_RANGE;
   priceRange: number[] = [0, DEFAULT_MAX_PRICE_RANGE];
@@ -22,6 +23,7 @@ export class SearchAndFilterComponent implements OnInit {
     priceMin: new FormControl(null as string | null),
     priceMax: new FormControl(null as string | null),
   });
+  activatedRouteSub!: Subscription;
 
   private modifyCheckBox(
     typeOfCheckbox: keyof { status: string[]; category: string[] },
@@ -63,25 +65,31 @@ export class SearchAndFilterComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute) {}
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe((params) => {
-      if (params) {
-        this.searchAndFilterForm.patchValue({
-          search: params?.['search'] || null,
-          category: params?.['category'] || [],
-          status: params?.['status'] || [],
-          priceMin: params?.['priceMin'] || null,
-          priceMax: params?.['priceMax'] || null,
-        });
-        this.minValue = Number(params?.['priceMin']) || 0;
-        this.maxValue = Number(params?.['priceMax']) || MAX_PRICE_RANGE;
-        this.priceRange = [
-          ...[
-            (this.minValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
-            (this.maxValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
-          ],
-        ];
+    this.activatedRouteSub = this.activatedRoute.queryParams.subscribe(
+      (params) => {
+        if (params) {
+          this.searchAndFilterForm.patchValue({
+            search: params?.['search'] || null,
+            category: params?.['category'] || [],
+            status: params?.['status'] || [],
+            priceMin: params?.['priceMin'] || null,
+            priceMax: params?.['priceMax'] || null,
+          });
+          this.minValue = Number(params?.['priceMin']) || 0;
+          this.maxValue = Number(params?.['priceMax']) || MAX_PRICE_RANGE;
+          this.priceRange = [
+            ...[
+              (this.minValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
+              (this.maxValue / MAX_PRICE_RANGE) * DEFAULT_MAX_PRICE_RANGE,
+            ],
+          ];
+        }
       }
-    });
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.activatedRouteSub.unsubscribe();
   }
   handleEventChecked(bool: boolean, nameField: string) {
     switch (nameField) {

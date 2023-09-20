@@ -6,15 +6,25 @@ declare global {
   }
 }
 
-export function setupAccountChangeListener(accountsChangedHandler: Function) {
+export function setupAccountChangeListener(
+  accountsChangedHandler: Function,
+  ...args: any[]
+) {
   if (typeof window.ethereum !== 'undefined') {
-    window.ethereum.on('accountsChanged', accountsChangedHandler);
+    window.ethereum.on('accountsChanged', (accounts: string[]) =>
+      accountsChangedHandler(accounts, ...args)
+    );
   }
 }
 
-export function setupNetworkChangeListener(networkChangedHandler: Function) {
+export function setupNetworkChangeListener(
+  networkChangedHandler: Function,
+  ...args: any[]
+) {
   if (typeof window.ethereum !== 'undefined') {
-    window.ethereum.on('chainChanged', networkChangedHandler);
+    window.ethereum.on('chainChanged', (chainId: string) =>
+      networkChangedHandler(chainId, ...args)
+    );
   }
 }
 

@@ -2,16 +2,32 @@
   <section class="wrapper">
     <div class="top">
       <div class="img">
-        <img src="" alt="" />
+        <img [src]="item.image" alt="" />
       </div>
       <div class="attr">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum ex sint
-        doloremque dignissimos asperiores suscipit quae pariatur, ratione rem
-        ipsum.
+        <h1>{{ item.nftId! | shortenAddress }}</h1>
+        <p class="owner">{{ item.owner! | shortenAddress }}</p>
+
+        <div class="item" *ngFor="let attr of item.attributes | keyvalue">
+          <p>
+            {{ attr.key | uppercaseFirstLetter }}
+          </p>
+          <p>{{ attr.value }}</p>
+        </div>
+
+        <div class="controls">
+          <button *ngIf="btnShown.includes('create_trading')" class="primaryBtn">Create Trading</button>
+          <button *ngIf="btnShown.includes('create_auction')" class="secondaryBtn">Create Auction</button>
+          <button *ngIf="btnShown.includes('cancel_trading')" class="cancelBtn">Cancel Trading</button>
+          <button *ngIf="btnShown.includes('cancel_auction')" class="cancelBtn">Cancel Auction</button>
+          <button *ngIf="btnShown.includes('buy')" class="primaryBtn">Buy</button>
+          <button *ngIf="btnShown.includes('bid')" class="secondaryBtn">Bid</button>
+          <button *ngIf="btnShown.includes('cancel')" class="cancelBtn">Cancel</button>
+        </div>
       </div>
     </div>
     <div class="middle">
-      <app-history-nft [history]="history"></app-history-nft>
+      <app-history-nft></app-history-nft>
     </div>
     <div class="bottom">
       <div class="same-type"></div>

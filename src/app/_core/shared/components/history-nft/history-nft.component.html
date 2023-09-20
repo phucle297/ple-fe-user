@@ -1,1 +1,20 @@
-<p>history-nft works!</p>
+<section class="wrapper">
+  <div class="container">
+    <h2>History</h2>
+    <div *ngFor="let item of history; index as i" class="item">
+      <div class="link">
+        <div class="dot"></div>
+        <div class="dash" *ngIf="i !== 0 && i !== 1"></div>
+        <div class="dashDown" *ngIf="i === 0"></div>
+      </div>
+      <div class="content">
+        <p>
+          {{ renderContent(item) }}
+        </p>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="fakeLink">Show More</button>
+    </div>
+  </div>
+</section>

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { StatusText } from '@app/_core/constants/status-enum';
 import { IProductItem } from '@app/_core/interfaces/ProductItem.interface';
@@ -6,17 +6,20 @@ import { productListMock } from '@app/_core/mocks/ProductList.mock';
 import { ModalService } from '@app/_core/services/modal.service';
 import { debounceTime } from 'rxjs/operators';
 import { SearchAndFilterComponent } from './components/search-and-filter/search-and-filter.component';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-marketplace-page',
   templateUrl: './marketplace-page.component.html',
   styleUrls: ['./marketplace-page.component.scss'],
 })
-export class MarketplacePageComponent {
+export class MarketplacePageComponent implements OnInit, OnDestroy {
   @ViewChild('searchAndFilter', { static: true })
   searchAndFilterComponent!: SearchAndFilterComponent;
   typeModal!: string;
   listItems: IProductItem[] = [];
   isOpenModal: boolean = false;
+  showModalSub!: Subscription;
+  modalDataSub!: Subscription;
 
   constructor(private router: Router, private modalService: ModalService) {
     this.listItems = productListMock;
@@ -24,15 +27,20 @@ export class MarketplacePageComponent {
 
   ngOnInit() {
     this.setupFormChangeListeners();
-    this.modalService.showModal$.subscribe((bool) => {
+    this.showModalSub = this.modalService.showModal$.subscribe((bool) => {
       this.isOpenModal = bool;
     });
-    this.modalService.modalData$.subscribe((data) => {
+    this.modalDataSub = this.modalService.modalData$.subscribe((data) => {
       const listType = ['auction', 'trading'];
       if (listType.includes(data?.type)) {
         this.typeModal = data.type;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.showModalSub.unsubscribe();
+    this.modalDataSub.unsubscribe();
   }
 
   private setupFormChangeListeners() {

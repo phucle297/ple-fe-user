@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ModalService } from '@app/_core/services/modal.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-modal-auction',
   templateUrl: './modal-auction.component.html',
   styleUrls: ['./modal-auction.component.scss'],
 })
-export class ModalAuctionComponent implements OnInit {
+export class ModalAuctionComponent implements OnInit, OnDestroy {
   data: any;
   visible: boolean = false;
   private statusObject = new BehaviorSubject<string>('init');
@@ -18,17 +18,24 @@ export class ModalAuctionComponent implements OnInit {
     Validators.min(0),
     Validators.pattern('^[0-9]*$'),
   ]);
+  modalSub!: Subscription;
+  statusSub!: Subscription;
   status: string = 'init';
 
   constructor(private modalService: ModalService) {}
 
   ngOnInit() {
-    this.modalService.modalData$.subscribe((data) => {
+    this.modalSub = this.modalService.modalData$.subscribe((data) => {
       this.data = data.data;
     });
-    this.status$.subscribe((status) => {
+    this.statusSub = this.status$.subscribe((status) => {
       this.status = status;
     });
+  }
+  ngOnDestroy() {
+    this.statusObject.unsubscribe();
+    this.modalSub.unsubscribe();
+    this.statusSub.unsubscribe();
   }
 
   showDialog() {
@@ -57,9 +64,5 @@ export class ModalAuctionComponent implements OnInit {
   }
   handlePriceChange(e: any) {
     this.biddingPrice = e.target.value;
-  }
-
-  ngOnDestroy() {
-    this.statusObject.unsubscribe();
   }
 }
