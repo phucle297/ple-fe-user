@@ -1,0 +1,32 @@
+.wrapper {
+    margin: 2rem;
+    border-radius: 8px;
+    background: #0f1633;
+    padding: 2rem;
+}
+
+.list {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .item {
+        margin-bottom: 1em;
+        padding: 1em;
+        background: #20263b;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        a {
+            display: block;
+        }
+        &:hover {
+            filter: brightness(1.1);
+            cursor: pointer;
+        }
+        img {
+            border-radius: 8px;
+        }
+    }
+}

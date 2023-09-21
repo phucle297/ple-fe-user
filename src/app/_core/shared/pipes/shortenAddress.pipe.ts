@@ -4,7 +4,8 @@ import { Pipe } from '@angular/core';
   name: 'shortenAddress',
 })
 export class ShortenAddressPipe {
-  transform(value: string, ...args: any[]): any {
+  transform(value: any, ...args: any[]): any {
+    if (typeof value !== 'string') return '';
     if (!value) {
       return '';
     }

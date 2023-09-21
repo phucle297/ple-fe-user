@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IHistoryNft } from '../interfaces/HistoryNft.interface';
 import { BehaviorSubject } from 'rxjs';
+import { IProductItem } from '../interfaces/ProductItem.interface';
 
 @Injectable({
   providedIn: 'root',

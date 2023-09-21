@@ -1,0 +1,18 @@
+<div class="wrapper">
+  <div class="container">
+    <h2>More Like This</h2>
+    <div class="list">
+      <div class="item" *ngFor="let item of sameTypeItems">
+        <a target="_blank" [href]="generateLink(item?.nftId)">
+          <div class="img">
+            <img [src]="item?.image" alt="" />
+          </div>
+          <div class="info">
+            <h3>{{ item.nftId | shortenAddress }}</h3>
+            <p class="fade small">{{ item.owner | shortenAddress }}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

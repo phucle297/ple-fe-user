@@ -16,13 +16,33 @@
         </div>
 
         <div class="controls">
-          <button *ngIf="btnShown.includes('create_trading')" class="primaryBtn">Create Trading</button>
-          <button *ngIf="btnShown.includes('create_auction')" class="secondaryBtn">Create Auction</button>
-          <button *ngIf="btnShown.includes('cancel_trading')" class="cancelBtn">Cancel Trading</button>
-          <button *ngIf="btnShown.includes('cancel_auction')" class="cancelBtn">Cancel Auction</button>
-          <button *ngIf="btnShown.includes('buy')" class="primaryBtn">Buy</button>
-          <button *ngIf="btnShown.includes('bid')" class="secondaryBtn">Bid</button>
-          <button *ngIf="btnShown.includes('cancel')" class="cancelBtn">Cancel</button>
+          <button
+            *ngIf="btnShown.includes('create_trading')"
+            class="primaryBtn"
+          >
+            Create Trading
+          </button>
+          <button
+            *ngIf="btnShown.includes('create_auction')"
+            class="secondaryBtn"
+          >
+            Create Auction
+          </button>
+          <button *ngIf="btnShown.includes('cancel_trading')" class="cancelBtn">
+            Cancel Trading
+          </button>
+          <button *ngIf="btnShown.includes('cancel_auction')" class="cancelBtn">
+            Cancel Auction
+          </button>
+          <button *ngIf="btnShown.includes('buy')" class="primaryBtn">
+            Buy
+          </button>
+          <button *ngIf="btnShown.includes('bid')" class="secondaryBtn">
+            Bid
+          </button>
+          <button *ngIf="btnShown.includes('cancel')" class="cancelBtn">
+            Cancel
+          </button>
         </div>
       </div>
     </div>
@@ -30,7 +50,7 @@
       <app-history-nft></app-history-nft>
     </div>
     <div class="bottom">
-      <div class="same-type"></div>
+      <app-same-type></app-same-type>
     </div>
   </section>
 </app-home-layout>
