@@ -73,7 +73,6 @@ export class NftDetailPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.walletService.walletLocalStorage.unsubscribe();
     this.walletSub.unsubscribe();
   }
 }
