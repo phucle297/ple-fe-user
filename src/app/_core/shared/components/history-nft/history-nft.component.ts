@@ -4,6 +4,7 @@ import { IHistoryNft } from '@app/_core/interfaces/HistoryNft.interface';
 import { GlobalService } from '@app/_core/services/global.service';
 import { Subscription } from 'rxjs';
 import { ShortenAddressPipe } from '../../pipes/shortenAddress.pipe';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-history-nft',
@@ -25,46 +26,182 @@ export class HistoryNftComponent implements OnInit, OnDestroy {
     this.historySub.unsubscribe();
   }
 
+  shortenAddress(str: string) {
+    return new ShortenAddressPipe().transform(str);
+  }
+
   renderContent(item: IHistoryNft) {
     switch (item.action) {
-      case HistoryTypeEnum.BID:
-        return 'Bid';
+      case HistoryTypeEnum.BID: {
+        let sentence = '';
+        sentence += `<a class="link" href="${
+          environment.ETHERSCAN_URL
+        }/address/${item.from}" target="_blank">${this.shortenAddress(
+          item.from as string
+        )}</a> bid ${item.price} PLE at `;
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
+        sentence += ` at <a target="_blank" class="link" href="${
+          environment.ETHERSCAN_URL
+        }/tx/${item.txnHash}">${this.shortenAddress(
+          item.txnHash as string
+        )}<a/>`;
+        return `<p class="normal">${sentence}</p>`;
+      }
 
-      case HistoryTypeEnum.BURN:
-        return 'Burn';
+      case HistoryTypeEnum.BURN: {
+        let sentence = '';
+        sentence += `This NFT was burned at `;
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
+        sentence += ` at <a target="_blank" class="link" href="${
+          environment.ETHERSCAN_URL
+        }/tx/${item.txnHash}">${this.shortenAddress(
+          item.txnHash as string
+        )}<a/>`;
+        return `<p class="normal">${sentence}</p>`;
+      }
 
-      case HistoryTypeEnum.BUY:
-        return 'Buy';
+      case HistoryTypeEnum.BUY: {
+        let sentence = '';
+        sentence += `<a class="link" href="${
+          environment.ETHERSCAN_URL
+        }/address/${item.from}" target="_blank">${this.shortenAddress(
+          item.from as string
+        )}</a> bought this NFT from `;
+        sentence += `<a class="link" href="${
+          environment.ETHERSCAN_URL
+        }/address/${item.to}" target="_blank">${this.shortenAddress(
+          item.to as string
+        )}</a> at `;
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
+        sentence += ` at <a target="_blank" class="link" href="${
+          environment.ETHERSCAN_URL
+        }/tx/${item.txnHash}">${this.shortenAddress(
+          item.txnHash as string
+        )}<a/>`;
+        return `<p class="normal">${sentence}</p>`;
+      }
 
-      case HistoryTypeEnum.CANCEL_AUCTION:
-        return 'Cancel Auction';
+      case HistoryTypeEnum.CANCEL_AUCTION: {
+        let sentence = '';
+        sentence += `<a class="link" href="${
+          environment.ETHERSCAN_URL
+        }/address/${item.from}" target="_blank">${this.shortenAddress(
+          item.from as string
+        )}</a> canceled the auction at `;
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
+        return `<p class="normal">${sentence}</p>`;
+      }
 
-      case HistoryTypeEnum.CANCEL_TRADING:
-        return 'Cancel Trading';
+      case HistoryTypeEnum.CANCEL_TRADING: {
+        let sentence = '';
+        sentence += `<a class="link" href="${
+          environment.ETHERSCAN_URL
+        }/address/${item.from}" target="_blank">${this.shortenAddress(
+          item.from as string
+        )}</a> canceled the trading at `;
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
+        return `<p class="normal">${sentence}</p>`;
+      }
 
-      case HistoryTypeEnum.CREATE_AUCTION:
-        return 'Create Auction';
+      case HistoryTypeEnum.CREATE_AUCTION: {
+        let sentence = '';
+        sentence += `<a class="link" href="${
+          environment.ETHERSCAN_URL
+        }/address/${item.from}" target="_blank">${this.shortenAddress(
+          item.from as string
+        )}</a> created an auction at `;
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
+        sentence += ` at <a target="_blank" class="link" href="${
+          environment.ETHERSCAN_URL
+        }/tx/${item.txnHash}">${this.shortenAddress(
+          item.txnHash as string
+        )}<a/>`;
 
-      case HistoryTypeEnum.CREATE_TRADING:
-        return 'Create Trading';
+        return `<p class="normal">${sentence}</p>`;
+      }
 
-      case HistoryTypeEnum.END_AUCTION:
-        return 'End Auction';
+      case HistoryTypeEnum.CREATE_TRADING: {
+        let sentence = '';
+        sentence += `<a class="link" href="${
+          environment.ETHERSCAN_URL
+        }/address/${item.from}" target="_blank">${this.shortenAddress(
+          item.from as string
+        )}</a> created a trading at `;
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
+        sentence += ` at <a target="_blank" class="link" href="${
+          environment.ETHERSCAN_URL
+        }/tx/${item.txnHash}">${this.shortenAddress(
+          item.txnHash as string
+        )}<a/>`;
+        return `<p class="normal">${sentence}</p>`;
+      }
 
-      case HistoryTypeEnum.END_TRADING:
-        return 'End Trading';
+      case HistoryTypeEnum.END_AUCTION: {
+        let sentence = '';
+        sentence += 'Auction ended at ';
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
 
-      case HistoryTypeEnum.EXPIRED:
-        return 'Expired';
+        return `<p class="normal">${sentence}</p>`;
+      }
 
-      case HistoryTypeEnum.MINT:
-        return 'Mint';
+      case HistoryTypeEnum.END_TRADING: {
+        let sentence = '';
+        sentence += 'Trading ended at ';
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
 
-      case HistoryTypeEnum.TRANSFER:
-        return 'Transfer';
+        return `<p class="normal">${sentence}</p>`;
+      }
 
-      case HistoryTypeEnum.WITHDRAW:
-        return 'Withdraw';
+      case HistoryTypeEnum.MINT: {
+        let sentence = '';
+        sentence += `This NFT was minted at `;
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
+        sentence += ` at <a target="_blank" class="link" href="${
+          environment.ETHERSCAN_URL
+        }/tx/${item.txnHash}">${this.shortenAddress(
+          item.txnHash as string
+        )}<a/>`;
+
+        return `<p class="normal">${sentence}</p>`;
+      }
+
+      case HistoryTypeEnum.TRANSFER: {
+        let sentence = '';
+        sentence += `<a class="link" href="${
+          environment.ETHERSCAN_URL
+        }/address/${item.from}" target="_blank">${this.shortenAddress(
+          item.from as string
+        )}</a> transferred this NFT to `;
+        sentence += `<a class="link" href="${
+          environment.ETHERSCAN_URL
+        }/address/${item.to}" target="_blank">${this.shortenAddress(
+          item.to as string
+        )}</a> at `;
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
+        sentence += ` at <a target="_blank" class="link" href="${
+          environment.ETHERSCAN_URL
+        }/tx/${item.txnHash}">${this.shortenAddress(
+          item.txnHash as string
+        )}<a/>`;
+        return `<p class="normal">${sentence}</p>`;
+      }
+
+      case HistoryTypeEnum.WIN_AUCTION: {
+        let sentence = '';
+        sentence += `<a class="link" href="${
+          environment.ETHERSCAN_URL
+        }/address/${item.from}" target="_blank">${this.shortenAddress(
+          item.from as string
+        )}</a> won the auction at `;
+        sentence += new Date(Number(item.date) * 1000).toLocaleString();
+        sentence += ` at <a target="_blank" class="link" href="${
+          environment.ETHERSCAN_URL
+        }/tx/${item.txnHash}">${this.shortenAddress(
+          item.txnHash as string
+        )}<a/>`;
+
+        return `<p class="normal">${sentence}</p>`;
+      }
 
       default:
         return '';

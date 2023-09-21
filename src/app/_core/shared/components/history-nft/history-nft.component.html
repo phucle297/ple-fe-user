@@ -7,14 +7,7 @@
         <div class="dash" *ngIf="i !== 0 && i !== 1"></div>
         <div class="dashDown" *ngIf="i === 0"></div>
       </div>
-      <div class="content">
-        <p>
-          {{ renderContent(item) }}
-        </p>
-      </div>
-    </div>
-    <div class="controls">
-      <button class="fakeLink">Show More</button>
+      <div class="content" [innerHtml]="renderContent(item)"></div>
     </div>
   </div>
 </section>

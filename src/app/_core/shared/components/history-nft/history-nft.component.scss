@@ -15,6 +15,7 @@
         align-items: center;
         max-height: 100%;
         position: relative;
+        padding: 0;
 
         .dot {
             width: 0.75em;
@@ -95,6 +96,10 @@
             @extend .dash;
             top: 50%;
         }
+    }
+
+    .content {
+        margin: 10px 0;
     }
 }
 

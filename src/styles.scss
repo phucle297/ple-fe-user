@@ -257,6 +257,18 @@ a {
         color: #3b82f6;
     }
 }
+.link {
+    @extend .fakeLink;
+    font-size: inherit;
+    border: none !important;
+}
+.normal {
+    font-weight: 400;
+    border: none;
+    outline: none;
+    color: white;
+    margin: 10px 0;
+}
 .input {
     background: #0f1633;
     border: none;

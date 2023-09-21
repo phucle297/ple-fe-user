@@ -10,6 +10,5 @@ export const HistoryTypeEnum = {
   BID: 'bid',
   END_AUCTION: 'end_auction',
   END_TRADING: 'end_trading',
-  WITHDRAW: 'withdraw',
-  EXPIRED: 'expired',
+  WIN_AUCTION: 'win_auction',
 };
