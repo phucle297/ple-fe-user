@@ -3,21 +3,91 @@
 .header {
     background: $primary;
     color: white;
-    display: block;
     position: fixed;
     width: 100%;
     height: 80px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     z-index: 100;
-    right: 0;
-}
 
+    .controls {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .bars {
+        margin-left: 20px;
+
+        button {
+            border: none;
+            outline: none;
+            background: transparent;
+            color: white;
+            padding: 0;
+
+            i {
+                font-size: 2em !important;
+            }
+        }
+    }
+}
+.item {
+    padding: 0.25rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: #0f1633;
+
+    &:hover,
+    &:active,
+    &:focus {
+        transition: all 0.3s ease;
+        background: #1c2546;
+        color: white;
+    }
+}
 .btn {
     margin-right: 20px;
 }
 
 .panel {
     background: red;
+}
+
+:host ::ng-deep {
+    .p-slidemenu.p-slidemenu-overlay {
+        background: #0f1633 !important;
+    }
+    .p-slidemenu-wrapper {
+        width: 100% !important;
+        div,
+        a,
+        li,
+        ul {
+            width: 100% !important;
+        }
+    }
+
+    .p-menuitem-content {
+        padding: 0.25rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: #0f1633 !important;
+        color: white !important;
+        &:hover,
+        &:active,
+        &:focus {
+            transition: all 0.3s ease;
+            background: #1c2546 !important;
+            color: white;
+        }
+
+        a {
+            width: 100%;
+        }
+
+        span {
+            color: white !important;
+        }
+    }
 }

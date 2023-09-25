@@ -8,6 +8,7 @@
     .welcome-section {
         h1 {
             margin: 0;
+            line-height: 1.5;
         }
         p {
             margin: 0;
@@ -15,16 +16,24 @@
     }
 
     .content {
-        width: 50%;
+        width: 100%;
+
+        @media (min-width: 768px) {
+            width: 50%;
+        }
     }
 
     .img {
         padding: 20px;
-        width: 50%;
+        width: 100%;
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
+
+        @media (min-width: 768px) {
+            width: 50%;
+        }
 
         img {
             border-radius: 16 px;
@@ -37,9 +46,11 @@
     .features-section,
     .why-choose-section,
     .experience-section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        @media (min-width: 768px) {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     }
 
     .why-choose-section {

@@ -12,8 +12,8 @@ export class NftService {
   private apiBaseUrl = environment.API_BASE_URL;
   constructor(private http: HttpClient) {}
 
-  getNftById(type: string, id: string): IProductItem {
-    const url = `${this.apiBaseUrl}/nft/${type}/${id}`;
+  getNftById(id: string): IProductItem {
+    const url = `${this.apiBaseUrl}/nft/${id}`;
     return productListMock.find((item) => item.nftId === id) as IProductItem;
   }
 

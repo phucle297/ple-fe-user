@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IProductItem } from '@app/_core/interfaces/ProductItem.interface';
+import { GlobalService } from '@app/_core/services/global.service';
 import { NftService } from '@app/_core/services/nft.service';
 
 @Component({
@@ -8,13 +9,19 @@ import { NftService } from '@app/_core/services/nft.service';
   styleUrls: ['./same-type.component.scss'],
 })
 export class SameTypeComponent implements OnInit {
+  item!: IProductItem;
   sameTypeItems: IProductItem[] = [];
 
-  constructor(private nftService: NftService) {}
+  constructor(
+    private nftService: NftService,
+    private globalService: GlobalService
+  ) {}
 
   async ngOnInit() {
-    this.nftService.getNftByType('nfn').subscribe((res) => {
-      this.sameTypeItems = res;
+    this.globalService.nftItem$.subscribe((res) => {
+      this.nftService.getNftByType(res.type as string).subscribe((res) => {
+        this.sameTypeItems = res;
+      });
     });
   }
   generateLink(nftId?: string | null | undefined) {

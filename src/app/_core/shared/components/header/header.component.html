@@ -1,14 +1,56 @@
 <p-toast position="bottom-right"></p-toast>
 <header class="header">
-  <button class="secondaryBtn btn" (click)="addCustomToken()">
-    Add token to your wallet
-  </button>
+  <div class="bars">
+    <button
+      icon="pi pi-bars"
+      label="Show"
+      (click)="menu.toggle($event); toggleSidebar()"
+    >
+      <i class="pi pi-align-justify"></i>
+    </button>
 
-  <button class="primaryBtn btn" (click)="connectWallet()" *ngIf="!account">
-    Connect your wallet
-  </button>
+    <button type="button" pButton></button>
+    <p-slideMenu
+      #menu
+      [model]="items"
+      [popup]="true"
+      [viewportHeight]="250"
+      [menuWidth]="175"
+    >
+      <div class="menu-wrapper">
+        <a routerLink="/" class="logo">
+          <img src="assets/images/fulllogo.png" alt="logo" class="logo" />
+        </a>
+        <div class="main-menu">
+          <div
+            class="item"
+            [ngClass]="{ active: item.routerLink[0] === route }"
+            *ngFor="let item of items"
+          >
+            <a [routerLink]="item.routerLink[0]" routerLinkActive="active">
+              <i [class]="item.icon"></i> {{ item.label }}</a
+            >
+          </div>
+        </div>
+      </div>
+    </p-slideMenu>
+  </div>
 
-  <button (click)="connectWallet()" class="primaryBtn btn" *ngIf="account">
-    {{ account | shortenAddress }}
-  </button>
+  <div class="controls">
+    <button
+      class="secondaryBtn btn"
+      *ngIf="width > 768"
+      (click)="addCustomToken()"
+    >
+      Add token to your wallet
+    </button>
+
+    <button class="primaryBtn btn" (click)="connectWallet()" *ngIf="!account">
+      Connect your wallet
+    </button>
+
+    <button (click)="connectWallet()" class="primaryBtn btn" *ngIf="account">
+      {{ account | shortenAddress }}
+    </button>
+  </div>
 </header>

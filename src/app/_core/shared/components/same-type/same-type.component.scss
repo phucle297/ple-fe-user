@@ -1,19 +1,32 @@
 .wrapper {
-    margin: 2rem;
+    margin-top: 1rem;
     border-radius: 8px;
     background: #0f1633;
     padding: 2rem;
+
+    h2 {
+        margin-bottom: 1rem;
+    }
 }
 
 .list {
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 1600px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
 
     .item {
-        margin-bottom: 1em;
         padding: 1em;
         background: #20263b;
         border-radius: 8px;
@@ -27,6 +40,7 @@
         }
         img {
             border-radius: 8px;
+            width: 100%;
         }
     }
 }

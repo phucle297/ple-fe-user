@@ -39,7 +39,9 @@ export class NftDetailPageComponent implements OnInit, OnDestroy {
     this.walletSub = this.walletService.walletLocalStorage.subscribe(
       async (wallet: any) => {
         if (nftId) {
-          this.item = await this.nftService.getNftById('nfn', nftId);
+          const res: IProductItem = await this.nftService.getNftById(nftId);
+          this.item = res;
+          this.globalService.nftItem = res;
           this.globalService.nftHistory =
             await this.nftService.getHistoryNftById(
               this.item.type!,

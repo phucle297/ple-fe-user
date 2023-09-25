@@ -9,7 +9,7 @@ export const productListMock = [
       description: 'description6',
     },
     owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
-    image:"https://picsum.photos/seed/string6/250"
+    image: 'https://picsum.photos/seed/string6/250',
   },
   {
     nftId: 'string2',
@@ -21,7 +21,7 @@ export const productListMock = [
       description: 'description2',
     },
     owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
-    image:"https://picsum.photos/seed/string2/250"
+    image: 'https://picsum.photos/seed/string2/250',
   },
   {
     nftId: 'string7',
@@ -33,7 +33,7 @@ export const productListMock = [
       description: 'description7',
     },
     owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
-    image:"https://picsum.photos/seed/string7/250"
+    image: 'https://picsum.photos/seed/string7/250',
   },
   {
     nftId: 'string3',
@@ -45,7 +45,7 @@ export const productListMock = [
       description: 'description3',
     },
     owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
-    image:"https://picsum.photos/seed/string3/250"
+    image: 'https://picsum.photos/seed/string3/250',
   },
 
   {
@@ -58,7 +58,7 @@ export const productListMock = [
       description: 'description8',
     },
     owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
-    image:"https://picsum.photos/seed/string8/250"
+    image: 'https://picsum.photos/seed/string8/250',
   },
   {
     nftId: 'string4',
@@ -70,7 +70,7 @@ export const productListMock = [
       description: 'description4',
     },
     owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
-    image:"https://picsum.photos/seed/string4/250"
+    image: 'https://picsum.photos/seed/string4/250',
   },
   {
     nftId: 'string5',
@@ -82,7 +82,7 @@ export const productListMock = [
       description: 'description5',
     },
     owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
-    image:"https://picsum.photos/seed/string5/250"
+    image: 'https://picsum.photos/seed/string5/250',
   },
   {
     nftId: 'string1',
@@ -94,6 +94,30 @@ export const productListMock = [
       description: 'description1',
     },
     owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
-    image:"https://picsum.photos/seed/string1/250"
+    image: 'https://picsum.photos/seed/string1/250',
+  },
+  {
+    nftId: 'string1',
+    type: 'NFN',
+    price: '10',
+    status: 1,
+    attributes: {
+      name: 'name1',
+      description: 'description1',
+    },
+    owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
+    image: 'https://picsum.photos/seed/string1/250',
+  },
+  {
+    nftId: 'string1',
+    type: 'NFN',
+    price: '10',
+    status: 2,
+    attributes: {
+      name: 'name1',
+      description: 'description1',
+    },
+    owner: '0xF9324B2CF3FB322576f418654975a0eca6Da1Cdd',
+    image: 'https://picsum.photos/seed/string1/250',
   },
 ];

@@ -1,12 +1,15 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   removeEventListeners,
   setupAccountChangeListener,
   setupNetworkChangeListener,
 } from '@app/_core/helpers/wallet-helpers';
+import { GlobalService } from '@app/_core/services/global.service';
 import { WalletService } from '@app/_core/services/wallet.service';
 import { environment } from '@env/environment';
 import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 import Web3 from 'web3';
 
 @Component({
@@ -16,17 +19,42 @@ import Web3 from 'web3';
   providers: [MessageService],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  items = [
+    {
+      label: 'Home',
+      icon: 'pi pi-fw pi-home',
+      routerLink: ['/home'],
+    },
+    {
+      label: 'Marketplace',
+      icon: 'pi pi-fw pi-shopping-cart',
+      routerLink: ['/marketplace'],
+    },
+    {
+      label: 'Pool',
+      icon: 'pi pi-fw pi-chart-bar',
+      routerLink: ['/pool'],
+    },
+    {
+      label: 'Events',
+      icon: 'pi pi-fw pi-calendar',
+      routerLink: ['/events'],
+    },
+  ];
   web3: Web3;
   account: string | undefined;
+  _openSidebar = false;
+  width: number = 0;
+  route: string = '';
+  routerSubscription!: Subscription;
 
   constructor(
+    private router: Router,
     private messageService: MessageService,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private globalService: GlobalService
   ) {
     this.web3 = new Web3(window.ethereum);
-    walletService.walletLocalStorage.subscribe((wallet: any) => {
-      this.account = wallet;
-    });
   }
 
   private handleAccountsChanged(accounts: string[], ...args: any[]) {
@@ -47,10 +75,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.checkWalletStatus();
     setupAccountChangeListener(this.handleAccountsChanged, this.walletService);
     setupNetworkChangeListener(this.handleNetworkChanged, this.walletService);
+    this.walletService.walletLocalStorage.subscribe((wallet: any) => {
+      this.account = wallet;
+    });
+    this.globalService.openSidebar$.subscribe((res) => {
+      this._openSidebar = res;
+    });
+    this.globalService.width$.subscribe((res) => {
+      this.width = res;
+    });
+    this.routerSubscription = this.router.events.subscribe(() => {
+      this.route = this.router.url;
+    });
   }
 
   ngOnDestroy() {
     removeEventListeners();
+    this.routerSubscription.unsubscribe();
   }
   async checkWalletStatus() {
     if (typeof window.ethereum === 'undefined') {
@@ -153,5 +194,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       console.log('No wallet provider detected.');
       return false;
     }
+  }
+
+  toggleSidebar() {
+    this.globalService.openSidebar = !this._openSidebar;
   }
 }
